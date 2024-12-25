@@ -104,11 +104,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\color.h" />
     <ClInclude Include="src\constants.h" />
     <ClInclude Include="src\func.h" />
     <ClInclude Include="src\tuple.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\color_test.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />
   </ItemGroup>
