@@ -104,12 +104,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\canvas.h" />
     <ClInclude Include="src\color.h" />
     <ClInclude Include="src\constants.h" />
+    <ClInclude Include="src\const_colors.h" />
     <ClInclude Include="src\func.h" />
     <ClInclude Include="src\tuple.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\canvas.cpp" />
+    <ClCompile Include="src\canvas_test.cpp" />
     <ClCompile Include="src\color_test.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />

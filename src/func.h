@@ -2,7 +2,10 @@
 
 #include "constants.h"
 
-using namespace std;
+template<typename T>
+inline float fabs(const T& a) {
+	return a < 0 ? -a : a;
+}
 
 template<typename T, typename U>
 inline bool equalDouble(const T& a, const U& b) {
