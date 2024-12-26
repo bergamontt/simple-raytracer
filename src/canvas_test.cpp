@@ -17,5 +17,7 @@ TEST(CanvasTest, CanvasPixelAt) {
 }
 
 TEST(CanvasTest, CanvasWritePixel) {
-
+	Canvas canvas(10, 20);
+	canvas.writePixel(2, 3, RED);
+	ASSERT_EQ(canvas.pixelAt(2, 3), RED);
 }

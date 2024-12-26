@@ -1,13 +1,26 @@
 #pragma once
 
+#include "constants.h"
+#include <ostream>
 #include "func.h"
 
 struct Color {
 	float red, green, blue;
 };
 
+inline const Color pixelToPPM(const Color& a) {
+	return { a.red * MAX_COLOR_VALUE,
+			 a.green * MAX_COLOR_VALUE ,
+			 a.blue * MAX_COLOR_VALUE  };
+}
+
 inline const Color createColor(const float red, const float green, const float blue) {
 	return { red, green, blue };
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Color& a) {
+	os << a.red << ' ' << a.green << ' ' << a.blue;
+	return os;
 }
 
 inline const Color operator+(const Color& a, const Color& b) {

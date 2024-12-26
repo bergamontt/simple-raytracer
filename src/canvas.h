@@ -1,6 +1,7 @@
 #pragma once
 
 #include "color.h"
+#include <sstream>
 
 class Canvas {
 public:
@@ -15,6 +16,8 @@ public:
 
 	const Color pixelAt(int x, int y);
 	void writePixel(int x, int y, const Color& color);
+	
+	std::string toPPM();
 
 	int width() const;
 	int height() const;
@@ -26,6 +29,9 @@ private:
 	Color* _pixels;
 
 	int indexOf(int x, int y) const;
+
+	void appendHeaderPPM(std::ostream& ss) const;
+	void appendPixelsPPM(std::ostream& ss) const;
 
 };
 

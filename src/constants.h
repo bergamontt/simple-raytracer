@@ -4,3 +4,6 @@ constexpr int VECTOR = 0;
 constexpr int POINT  = 1;
 
 constexpr float EPSILON = 0.000'01;
+
+constexpr int MAX_COLOR_VALUE = 255;
+constexpr int PIXELS_PER_LINE = 3;

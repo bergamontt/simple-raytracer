@@ -1,4 +1,6 @@
 #include "canvas.h"
+#include "constants.h"
+#include "color.h"
 
 Canvas::~Canvas() {
     delete[] _pixels;
@@ -15,6 +17,14 @@ void Canvas::writePixel(int x, int y, const Color& color) {
     _pixels[indexOf(x, y)] = color;
 }
 
+std::string Canvas::toPPM()
+{
+    std::ostringstream ss;
+    appendHeaderPPM(ss);
+    appendPixelsPPM(ss);
+    return ss.str();
+}
+
 int Canvas::width() const {
     return _width;
 }
@@ -26,4 +36,21 @@ int Canvas::height() const {
 int Canvas::indexOf(int x, int y) const
 {
     return x + y * _width;
+}
+
+void Canvas::appendHeaderPPM(std::ostream& ss) const {
+    ss << "P3\n" << _width << " " << _height << "\n255\n";
+}
+
+void Canvas::appendPixelsPPM(std::ostream& ss) const {
+    int pixelsCount = 0;
+    for (int i = 0; i < _height * _width; ++i, ++pixelsCount) {
+        ss << pixelToPPM(_pixels[i]);
+        if (pixelsCount == PIXELS_PER_LINE)
+            ss << '\n';
+        else ss << ' ';
+    }
+
+    if (pixelsCount != PIXELS_PER_LINE)
+        ss << '\n';
 }
