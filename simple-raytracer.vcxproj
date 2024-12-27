@@ -106,6 +106,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\matrix.h" />
     <ClInclude Include="src\canvas.h" />
     <ClInclude Include="src\color.h" />
     <ClInclude Include="src\constants.h" />
@@ -114,10 +115,13 @@
     <ClInclude Include="src\tuple.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\canvas.cpp" />
     <ClCompile Include="src\canvas_test.cpp" />
     <ClCompile Include="src\color_test.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\matrix_test.cpp" />
+    <ClCompile Include="src\tuple.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

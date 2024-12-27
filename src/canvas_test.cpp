@@ -2,13 +2,15 @@
 #include "canvas.h"
 #include "const_colors.h"
 
-TEST(CanvasTest, CanvasCreation) {
+TEST(CanvasTest, CanvasCreation)
+{
 	Canvas canvas(10, 20);
 	ASSERT_EQ(canvas.width(), 10);
 	ASSERT_EQ(canvas.height(), 20);
 }
 
-TEST(CanvasTest, CanvasPixelAt) {
+TEST(CanvasTest, CanvasPixelAt)
+{
 	Canvas canvas(10, 20);
 	for (int i = 0; i < canvas.width(); ++i) {
 		for (int j = 0; j < canvas.height(); ++j)
@@ -16,7 +18,8 @@ TEST(CanvasTest, CanvasPixelAt) {
 	}
 }
 
-TEST(CanvasTest, CanvasWritePixel) {
+TEST(CanvasTest, CanvasWritePixel)
+{
 	Canvas canvas(10, 20);
 	canvas.writePixel(2, 3, RED);
 	ASSERT_EQ(canvas.pixelAt(2, 3), RED);

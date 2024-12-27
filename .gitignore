@@ -20,6 +20,7 @@ simple-raytracer.vcxproj.user
 x64/
 packages/
 simple-raytracer/
+test.ppm
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
