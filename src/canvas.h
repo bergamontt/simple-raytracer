@@ -3,7 +3,8 @@
 #include "color.h"
 #include <sstream>
 
-class Canvas {
+class Canvas
+{
 public:
 
 	Canvas(int width, int height)

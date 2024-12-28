@@ -113,6 +113,7 @@
     <ClInclude Include="src\const_colors.h" />
     <ClInclude Include="src\func.h" />
     <ClInclude Include="src\tuple.h" />
+    <ClInclude Include="src\transformation.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\matrix.cpp" />
@@ -121,8 +122,10 @@
     <ClCompile Include="src\color_test.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\matrix_test.cpp" />
+    <ClCompile Include="src\transformation_test.cpp" />
     <ClCompile Include="src\tuple.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />
+    <ClCompile Include="src\transformation.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

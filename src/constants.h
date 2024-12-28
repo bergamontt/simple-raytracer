@@ -7,3 +7,5 @@ constexpr float EPSILON = 0.000'1;
 
 constexpr int MAX_COLOR_VALUE = 255;
 constexpr int PIXELS_PER_LINE = 3;
+
+constexpr int TRANSFORM_N = 4;

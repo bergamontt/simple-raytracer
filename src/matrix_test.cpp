@@ -168,3 +168,13 @@ TEST(MatrixTest, InverseMatrix2)
 	Matrix inva = a.inverse();
 	ASSERT_EQ(res, inva);
 }
+
+TEST(MatrixTest, MultiplyingProductByInverse)
+{
+	float arr[]{ 3, -9, 7, 3, 3, -8, 2, -9, -4, 4, 4, 1, -6, 5, -1, 1 };
+	Matrix a(arr, 4);
+	float arr1[]{ 8, 2, 2, 2, 3, -1, 7, 0, 7, 0, 5, 4, 6, -2, 0, 5 };
+	Matrix b(arr1, 4);
+	Matrix product = a * b;
+	ASSERT_EQ(product * b.inverse(), a);
+}

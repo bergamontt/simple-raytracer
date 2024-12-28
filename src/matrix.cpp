@@ -141,8 +141,8 @@ const Matrix operator*(const Matrix& a, const Matrix& b)
 
 const Tuple operator*(const Matrix& a, const Tuple& b)
 {
-	return { a.get(0, 0) * b.x + a.get(0, 1) * b.y + a.get(0, 2) * b.z * a.get(0, 3) * b.w,
-			 a.get(1, 0) * b.x + a.get(1, 1) * b.y + a.get(1, 2) * b.z * a.get(1, 3) * b.w,
-			 a.get(2, 0) * b.x + a.get(2, 1) * b.y + a.get(2, 2) * b.z * a.get(2, 3) * b.w,
-			 a.get(3, 0) * b.x + a.get(3, 1) * b.y + a.get(3, 2) * b.z * a.get(3, 3) * b.w };
+	return { a.get(0, 0) * b.x + a.get(0, 1) * b.y + a.get(0, 2) * b.z + a.get(0, 3) * b.w,
+			 a.get(1, 0) * b.x + a.get(1, 1) * b.y + a.get(1, 2) * b.z + a.get(1, 3) * b.w,
+			 a.get(2, 0) * b.x + a.get(2, 1) * b.y + a.get(2, 2) * b.z + a.get(2, 3) * b.w,
+			 a.get(3, 0) * b.x + a.get(3, 1) * b.y + a.get(3, 2) * b.z + a.get(3, 3) * b.w };
 }

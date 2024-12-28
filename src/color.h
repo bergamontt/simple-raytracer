@@ -11,9 +11,9 @@ struct Color
 
 inline const Color pixelToPPM(const Color& a)
 {
-	return { a.red * MAX_COLOR_VALUE,
+	return { a.red   * MAX_COLOR_VALUE,
 			 a.green * MAX_COLOR_VALUE ,
-			 a.blue * MAX_COLOR_VALUE  };
+			 a.blue  * MAX_COLOR_VALUE  };
 }
 
 inline const Color createColor(const float red, const float green, const float blue)
