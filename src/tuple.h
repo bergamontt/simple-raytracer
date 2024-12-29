@@ -5,19 +5,14 @@
 
 struct Tuple
 {
-	float x, y, z, w;
+	float _x, _y, _z, _w;
 };
 
 Tuple createTuple(const float x, const float y, const float z, const float w);
 Tuple createPoint(const float x, const float y, const float z);
 Tuple createVector(const float x, const float y, const float z);
 
-template<typename T>
-inline const Tuple operator*(const Tuple& a, const T& b)
-{
-	return { a.x * b, a.y * b, a.z * b, a.w * b };
-}
-
+const Tuple operator*(const Tuple& a, const float b);
 const Tuple operator+(const Tuple& a, const Tuple& b);
 const Tuple operator-(const Tuple& a, const Tuple& b);
 const Tuple operator-(const Tuple& a);

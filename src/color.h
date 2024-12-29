@@ -6,14 +6,14 @@
 
 struct Color
 {
-	float red, green, blue;
+	float _red, _green, _blue;
 };
 
 inline const Color pixelToPPM(const Color& a)
 {
-	return { a.red   * MAX_COLOR_VALUE,
-			 a.green * MAX_COLOR_VALUE ,
-			 a.blue  * MAX_COLOR_VALUE  };
+	return { a._red   * MAX_COLOR_VALUE,
+			 a._green * MAX_COLOR_VALUE ,
+			 a._blue  * MAX_COLOR_VALUE  };
 }
 
 inline const Color createColor(const float red, const float green, const float blue)
@@ -23,33 +23,33 @@ inline const Color createColor(const float red, const float green, const float b
 
 inline std::ostream& operator<<(std::ostream& os, const Color& a)
 {
-	os << a.red << ' ' << a.green << ' ' << a.blue;
+	os << a._red << ' ' << a._green << ' ' << a._blue;
 	return os;
 }
 
 inline const Color operator+(const Color& a, const Color& b)
 {
-	return { a.red + b.red, a.green + b.green, a.blue + b.blue };
+	return { a._red + b._red, a._green + b._green, a._blue + b._blue };
 }
 
 inline const Color operator-(const Color& a, const Color& b)
 {
-	return { a.red - b.red, a.green - b.green, a.blue - b.blue };
+	return { a._red - b._red, a._green - b._green, a._blue - b._blue };
 }
 
 inline const Color operator*(const Color& a, const Color& b)
 {
-	return { a.red * b.red, a.green * b.green, a.blue * b.blue };
+	return { a._red * b._red, a._green * b._green, a._blue * b._blue };
 }
 
 template<typename T>
 inline const Color operator*(const Color& a, const T& b)
 {
-	return { a.red * b, a.green * b, a.blue * b };
+	return { a._red * b, a._green * b, a._blue * b };
 }
 
 inline bool operator==(const Color& a, const Color& b)
 {
-	return equalDouble(a.red, b.red) && equalDouble(a.green, b.green)
-		&& equalDouble(a.blue, b.blue);
+	return equalDouble(a._red, b._red) && equalDouble(a._green, b._green)
+		&& equalDouble(a._blue, b._blue);
 }

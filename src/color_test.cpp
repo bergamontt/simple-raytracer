@@ -5,9 +5,9 @@
 TEST(ColorTest, ColorCreation)
 {
 	Color c = createColor(-0.5, 0.4, 1.7);
-	ASSERT_FLOAT_EQ(c.red, -0.5);
-	ASSERT_FLOAT_EQ(c.green, 0.4);
-	ASSERT_FLOAT_EQ(c.blue, 1.7);
+	ASSERT_FLOAT_EQ(c._red, -0.5);
+	ASSERT_FLOAT_EQ(c._green, 0.4);
+	ASSERT_FLOAT_EQ(c._blue, 1.7);
 }
 
 TEST(ColorTest, ColorAddition)

@@ -5,10 +5,10 @@
 TEST(PointTest, CreatingPoint)
 {
 	Tuple a = createPoint(4.3, -4.2, 3.1);
-	ASSERT_FLOAT_EQ(a.x, 4.3);
-	ASSERT_FLOAT_EQ(a.y, -4.2);
-	ASSERT_FLOAT_EQ(a.z, 3.1);
-	ASSERT_FLOAT_EQ(a.w, 1.0);
+	ASSERT_FLOAT_EQ(a._x, 4.3);
+	ASSERT_FLOAT_EQ(a._y, -4.2);
+	ASSERT_FLOAT_EQ(a._z, 3.1);
+	ASSERT_FLOAT_EQ(a._w, 1.0);
 	ASSERT_TRUE(isPoint(a));
 	ASSERT_FALSE(isVector(a));
 }
@@ -16,10 +16,10 @@ TEST(PointTest, CreatingPoint)
 TEST(VectorTest, CreatingVector)
 {
 	Tuple a = createVector(4.3, -4.2, 3.1);
-	ASSERT_FLOAT_EQ(a.x, 4.3);
-	ASSERT_FLOAT_EQ(a.y, -4.2);
-	ASSERT_FLOAT_EQ(a.z, 3.1);
-	ASSERT_FLOAT_EQ(a.w, 0.0);
+	ASSERT_FLOAT_EQ(a._x, 4.3);
+	ASSERT_FLOAT_EQ(a._y, -4.2);
+	ASSERT_FLOAT_EQ(a._z, 3.1);
+	ASSERT_FLOAT_EQ(a._w, 0.0);
 	ASSERT_FALSE(isPoint(a));
 	ASSERT_TRUE(isVector(a));
 }
