@@ -1,6 +1,6 @@
 #pragma once
 #include "shapes/sphere.h"
-#include "tuple.h"
+#include "intersection.h"
 #include <vector>
 
 using namespace std;
@@ -18,7 +18,7 @@ public:
 
 	const Tuple position(float time) const;
 
-	vector<float> intersect(const Sphere& sph) const;
+	vector<Intersection> intersect(const Sphere& sph) const;
 
 private:
 	Tuple _origin;

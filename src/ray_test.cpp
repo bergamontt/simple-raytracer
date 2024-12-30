@@ -23,28 +23,28 @@ TEST(RayTest, SphereIntersection1)
 {
 	Ray r(createPoint(0, 0, -5), createVector(0, 0, 1));
 	Sphere s;
-	vector<float> xs = r.intersect(s);
+	vector<Intersection> xs = r.intersect(s);
 	ASSERT_EQ(xs.size(), 2);
-	ASSERT_EQ(xs.back(), 6.0f);
+	ASSERT_EQ(xs.back().time(), 6.0f);
 	xs.pop_back();
-	ASSERT_EQ(xs.back(), 4.0f);
+	ASSERT_EQ(xs.back().time(), 4.0f);
 }
 
 TEST(RayTest, SphereIntersection2)
 {
 	Ray r(createPoint(0, 1, -5), createVector(0, 0, 1));
 	Sphere s;
-	vector<float> xs = r.intersect(s);
-	ASSERT_EQ(xs.back(), 5.0f);
+	vector<Intersection> xs = r.intersect(s);
+	ASSERT_EQ(xs.back().time(), 5.0f);
 	xs.pop_back();
-	ASSERT_EQ(xs.back(), 5.0f);
+	ASSERT_EQ(xs.back().time(), 5.0f);
 }
 
 TEST(RayTest, SphereIntersection3)
 {
 	Ray r(createPoint(0, 2, -5), createVector(0, 0, 1));
 	Sphere s;
-	vector<float> xs = r.intersect(s);
+	vector<Intersection> xs = r.intersect(s);
 	ASSERT_EQ(xs.size(), 0);
 }
 
@@ -52,18 +52,18 @@ TEST(RayTest, SphereIntersection4)
 {
 	Ray r(createPoint(0, 0, 0), createVector(0, 0, 1));
 	Sphere s;
-	vector<float> xs = r.intersect(s);
-	ASSERT_EQ(xs.back(), 1.0f);
+	vector<Intersection> xs = r.intersect(s);
+	ASSERT_EQ(xs.back().time(), 1.0f);
 	xs.pop_back();
-	ASSERT_EQ(xs.back(), -1.0f);
+	ASSERT_EQ(xs.back().time(), -1.0f);
 }
 
 TEST(RayTest, SphereIntersection5)
 {
 	Ray r(createPoint(0, 0, 5), createVector(0, 0, 1));
 	Sphere s;
-	vector<float> xs = r.intersect(s);
-	ASSERT_EQ(xs.back(), -4.0f);
+	vector<Intersection> xs = r.intersect(s);
+	ASSERT_EQ(xs.back().time(), -4.0f);
 	xs.pop_back();
-	ASSERT_EQ(xs.back(), -6.0f);
+	ASSERT_EQ(xs.back().time(), -6.0f);
 }

@@ -18,9 +18,9 @@ const Tuple Ray::position(float time) const
 	return _origin + _direction * time;
 }
 
-vector<float> Ray::intersect(const Sphere& sph) const
+vector<Intersection> Ray::intersect(const Sphere& s) const
 {
-	Tuple sphereToRay = _origin - createPoint(0, 0, 0);
+	Tuple sphereToRay = _origin - s.origin();
 
 	float a = dot(_direction, _direction);
 	float b = 2 * dot(_direction, sphereToRay);
@@ -28,21 +28,21 @@ vector<float> Ray::intersect(const Sphere& sph) const
 	float discriminant = b * b - 4 * a * c;
 
 	if (discriminant < 0)
-		return vector<float>();
+		return vector<Intersection>();
 
 	float t1 = (-b - sqrt(discriminant)) / (2 * a);
 	float t2 = (-b + sqrt(discriminant)) / (2 * a);
 
-	vector<float> intersections;
+	vector<Intersection> intersections;
 	
 	if (t1 > t2)
 	{
-		intersections.push_back(t2);
-		intersections.push_back(t1);
+		intersections.push_back({ t2 , s });
+		intersections.push_back({ t1 , s });
 	}
 	else {
-		intersections.push_back(t1);
-		intersections.push_back(t2);
+		intersections.push_back({ t1 , s });
+		intersections.push_back({ t2 , s });
 	}
 
 	return intersections;
