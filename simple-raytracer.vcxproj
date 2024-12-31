@@ -60,6 +60,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -120,6 +121,7 @@
     <ClInclude Include="src\transformation.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\intersection.cpp" />
     <ClCompile Include="src\intersections.cpp" />
     <ClCompile Include="src\intersection_test.cpp" />
     <ClCompile Include="src\shapes\sphere.cpp" />
@@ -131,6 +133,7 @@
     <ClCompile Include="src\matrix_test.cpp" />
     <ClCompile Include="src\ray.cpp" />
     <ClCompile Include="src\ray_test.cpp" />
+    <ClCompile Include="src\shapes\sphere_test.cpp" />
     <ClCompile Include="src\transformation_test.cpp" />
     <ClCompile Include="src\tuple.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />

@@ -18,31 +18,39 @@ const Tuple Ray::position(float time) const
 	return _origin + _direction * time;
 }
 
-vector<Intersection> Ray::intersect(const Sphere& s) const
+const Ray Ray::transform(const Matrix& m) const
 {
-	Tuple sphereToRay = _origin - s.origin();
+	return { m * _origin, m * _direction };
+}
 
-	float a = dot(_direction, _direction);
-	float b = 2 * dot(_direction, sphereToRay);
+optional<Intersections> Ray::intersect(const Sphere& s) const
+{
+	Matrix sphereTransform = s.transform();
+	Matrix invSphereTransform = sphereTransform.inverse();
+	Ray transformedRay = transform(invSphereTransform);
+	Tuple sphereToRay = transformedRay._origin - s.origin();
+
+	float a = dot(transformedRay._direction, transformedRay._direction);
+	float b = 2 * dot(transformedRay._direction, sphereToRay);
 	float c = dot(sphereToRay, sphereToRay) - 1;
 	float discriminant = b * b - 4 * a * c;
 
 	if (discriminant < 0)
-		return vector<Intersection>();
+		return {};
 
 	float t1 = (-b - sqrt(discriminant)) / (2 * a);
 	float t2 = (-b + sqrt(discriminant)) / (2 * a);
 
-	vector<Intersection> intersections;
+	Intersections intersections;
 	
 	if (t1 > t2)
 	{
-		intersections.push_back({ t2 , s });
-		intersections.push_back({ t1 , s });
+		intersections.add({ t2 , s });
+		intersections.add({ t1 , s });
 	}
 	else {
-		intersections.push_back({ t1 , s });
-		intersections.push_back({ t2 , s });
+		intersections.add({ t1 , s });
+		intersections.add({ t2 , s });
 	}
 
 	return intersections;

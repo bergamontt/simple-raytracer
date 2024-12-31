@@ -4,14 +4,13 @@
 class Matrix
 {
 public:
-	
+
 	Matrix(int row, int col)
 		: _rows{ row }
 		, _cols{ col }
 		, _matrix{ new float* [row] }
 	{
-		for (int i = 0; i < _rows; ++i)
-			_matrix[i] = new float[_cols]();
+		initMatrix();
 	}
 
 	Matrix(const float matrix[], int n)
@@ -27,7 +26,14 @@ public:
 		}
 	}
 
+	Matrix(const Matrix& src)
+	{
+		deepCopy(src);
+	}
+
 	~Matrix();
+
+	Matrix& operator=(const Matrix& src);
 
 	float get(int row, int col) const;
 	void set(int row, int col, float value);
@@ -39,7 +45,7 @@ public:
 
 	bool invertible() const;
 	const Matrix inverse() const;
-	
+
 	float determinant() const;
 	const Matrix submatrix(int row, int col) const;
 	float minor(int row, int col) const;
@@ -52,6 +58,11 @@ private:
 	int _rows;
 	int _cols;
 	float** _matrix;
+
+	void destroy();
+	void initMatrix();
+	void deepCopy(const Matrix& src);
+
 };
 
 bool operator==(const Matrix& a, const Matrix& b);

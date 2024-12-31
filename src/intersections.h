@@ -1,17 +1,25 @@
 #pragma once
 #include "intersection.h"
+#include <optional>
+#include <vector>
+
+using namespace std;
 
 class Intersections
 {
+
 public:
 
-	Intersections(int n)
-		: _array{ new Intersection[n] }
-	{}
+	Intersections() = default;
+
+	const Intersection get(int index) const;
+	optional<Intersection> hit() const;
+
+	void add(const Intersection& i);
+	int size() const;
 
 private:
 
-	Intersection* _array;
-	int _n;
+	vector<Intersection> _intersections;
 
 };

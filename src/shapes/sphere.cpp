@@ -1,6 +1,16 @@
 #include "sphere.h"
 #include "../func.h"
 
+const Matrix Sphere::transform() const
+{
+    return _transform;
+}
+
+void Sphere::setTransform(const Matrix& m)
+{
+    _transform = m;
+}
+
 const Tuple Sphere::origin() const
 {
     return _origin;

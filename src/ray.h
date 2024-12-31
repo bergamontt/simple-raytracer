@@ -1,7 +1,8 @@
 #pragma once
 #include "shapes/sphere.h"
-#include "intersection.h"
-#include <vector>
+#include "intersections.h"
+#include "matrix.h"
+#include <optional>
 
 using namespace std;
 
@@ -17,8 +18,9 @@ public:
 	const Tuple direction() const;
 
 	const Tuple position(float time) const;
+	const Ray transform(const Matrix& m) const;
 
-	vector<Intersection> intersect(const Sphere& sph) const;
+	optional<Intersections> intersect(const Sphere& sph) const;
 
 private:
 	Tuple _origin;

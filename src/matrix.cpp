@@ -3,12 +3,16 @@
 
 Matrix::~Matrix()
 {
-	for (int i = 0; i < _rows; ++i)
-		delete[] _matrix[i];
-	delete[] _matrix;
-	_matrix = nullptr;
+	destroy();
 	_rows = 0;
 	_cols = 0;
+}
+
+Matrix& Matrix::operator=(const Matrix& src)
+{
+	if (this != &src)
+		deepCopy(src);
+	return *this;
 }
 
 float Matrix::get(int row, int col) const
@@ -37,6 +41,34 @@ const Matrix Matrix::indentityMatrix(int n)
 	for (int i = 0; i < n; ++i)
 		indMatrix.set(i, i, 1.0);
 	return indMatrix;
+}
+
+void Matrix::destroy()
+{
+	if (_matrix == nullptr)
+		return;
+	for (int i = 0; i < _rows; ++i)
+		delete[] _matrix[i];
+	delete[] _matrix;
+}
+
+void Matrix::initMatrix()
+{
+	for (int i = 0; i < _rows; ++i)
+		_matrix[i] = new float[_cols]();
+}
+
+void Matrix::deepCopy(const Matrix& src)
+{
+	_rows = src._rows;
+	_cols = src._cols;
+
+	_matrix = new float* [_rows];
+	initMatrix();
+
+	for (int row = 0; row < _rows; ++row)
+		for (int col = 0; col < _cols; ++col)
+			_matrix[row][col] = src._matrix[row][col];
 }
 
 const Matrix Matrix::transpose() const

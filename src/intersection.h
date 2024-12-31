@@ -9,21 +9,26 @@ class Intersection
 
 public:
 
-	Intersection() = default;
-
 	Intersection(float time, const Sphere& s)
 		: _time{ time }
-		, _s{ s }
+		, _sphere{ s }
 	{}
 
-	float time() const { return _time; }
-	const Sphere object() const { return _s; };
+	Intersection()
+		: _time{ 0.0 }
+	{}
+
+	float time() const;
+	const Sphere object() const;
 
 private:
 
 	float _time;
-	Sphere _s;
+	Sphere _sphere;
 
 };
 
-const Intersection
+bool operator>(const Intersection& a, const Intersection& b);
+bool operator<(const Intersection& a, const Intersection& b);
+bool operator==(const Intersection& a, const Intersection& b);
+bool operator!=(const Intersection& a, const Intersection& b);
