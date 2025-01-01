@@ -1,5 +1,5 @@
 #pragma once
-#include "../tuple.h"
+#include "../material.h"
 #include "../matrix.h"
 #include "../constants.h"
 
@@ -15,18 +15,23 @@ public:
 		: _thisID{ s._ID }
 	{}
 
-	const Matrix transform() const;
-	void setTransform(const Matrix& m);
+	const Tuple normalAt(const Tuple& point) const;
 
+	const Matrix transform() const;
+	const Material material() const;
 	const Tuple origin() const;
 	const float radius() const;
 	const int id() const;
 
+	void setTransform(const Matrix& m);
+	void setMaterial(const Material& m);
+
 private:
-	
-	Matrix _transform = Matrix::indentityMatrix(TRANSFORM_N);
+
+	float _radius = 1.0f;
+	Material _material;
 	Tuple _origin = createPoint(0.0f, 0.0f, 0.0f);
-	float _radius = 1;
+	Matrix _transform = Matrix::indentityMatrix(TRANSFORM_N);
 	
 	int _thisID;
 	inline static int _ID;

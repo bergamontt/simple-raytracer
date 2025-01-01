@@ -109,6 +109,8 @@
   <ItemGroup>
     <ClInclude Include="src\intersection.h" />
     <ClInclude Include="src\intersections.h" />
+    <ClInclude Include="src\light.h" />
+    <ClInclude Include="src\material.h" />
     <ClInclude Include="src\shapes\sphere.h" />
     <ClInclude Include="src\matrix.h" />
     <ClInclude Include="src\canvas.h" />
@@ -124,6 +126,8 @@
     <ClCompile Include="src\intersection.cpp" />
     <ClCompile Include="src\intersections.cpp" />
     <ClCompile Include="src\intersection_test.cpp" />
+    <ClCompile Include="src\light.cpp" />
+    <ClCompile Include="src\light_test.cpp" />
     <ClCompile Include="src\shapes\sphere.cpp" />
     <ClCompile Include="src\matrix.cpp" />
     <ClCompile Include="src\canvas.cpp" />

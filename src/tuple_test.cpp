@@ -2,6 +2,8 @@
 #include "tuple.h"
 #include "func.h"
 
+using namespace std;
+
 TEST(PointTest, CreatingPoint)
 {
 	Tuple a = createPoint(4.3, -4.2, 3.1);
@@ -105,4 +107,20 @@ TEST(TupleTest, CrossProductOfTwoVectors)
 	Tuple b = createVector(2, 3, 4);
 	Tuple res = createVector(-1, 2, -1);
 	ASSERT_TRUE(cross(a, b) == res);
+}
+
+TEST(TupleTest, ReflectingVector1)
+{
+	Tuple v = createVector(1, -1, 0);
+	Tuple n = createVector(0, 1, 0);
+	Tuple r = reflect(v, n);
+	ASSERT_EQ(r, createVector(1, 1, 0));
+}
+
+TEST(TupleTest, ReflectingVector2)
+{
+	Tuple v = createVector(0, -1, 0);
+	Tuple n = createVector(sqrt(2) / 2, sqrt(2) / 2, 0);
+	Tuple r = reflect(v, n);
+	ASSERT_EQ(r, createVector(1, 0, 0));
 }

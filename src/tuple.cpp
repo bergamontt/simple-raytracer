@@ -48,6 +48,11 @@ float magnitude(const Tuple& a)
 	return std::sqrt(a._x * a._x + a._y * a._y + a._z * a._z + a._w * a._w);
 }
 
+const Tuple reflect(const Tuple& inVector, const Tuple& normal)
+{
+	return inVector - normal * 2 * dot(inVector, normal);
+}
+
 const Tuple normalize(const Tuple& a)
 {
 	float m = magnitude(a);

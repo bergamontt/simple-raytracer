@@ -20,8 +20,10 @@ const Tuple operator-(const Tuple& a);
 bool operator==(const Tuple& a, const Tuple& b);
 
 float magnitude(const Tuple& a);
-const Tuple normalize(const Tuple& a);
 float dot(const Tuple& a, const Tuple& b);
+
+const Tuple reflect(const Tuple& inVector, const Tuple& normal);
+const Tuple normalize(const Tuple& a);
 const Tuple cross(const Tuple& a, const Tuple& b);
 
 bool isPoint(const Tuple& tuple);
