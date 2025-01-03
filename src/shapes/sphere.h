@@ -12,7 +12,11 @@ public:
 	{}
 
 	Sphere(const Sphere& s)
-		: _thisID{ s._ID }
+		: _radius{s._radius}
+		, _material{s._material}
+		, _origin{s._origin}
+		, _transform{s._transform}
+		, _thisID{ s._ID }
 	{}
 
 	const Tuple normalAt(const Tuple& point) const;

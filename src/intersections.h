@@ -12,11 +12,14 @@ public:
 
 	Intersections() = default;
 
-	const Intersection get(int index) const;
-	optional<Intersection> hit() const;
+	void merge(const Intersections& merged);
+	void sort();
 
-	void add(const Intersection& i);
+	optional<Intersection> hit() const;
+	const Intersection get(int index) const;
+
 	int size() const;
+	void add(const Intersection& i);
 
 private:
 

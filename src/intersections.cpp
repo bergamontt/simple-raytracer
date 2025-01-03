@@ -1,8 +1,20 @@
 #include "intersections.h"
+#include <algorithm> 
 
 const Intersection Intersections::get(int index) const
 {
 	return _intersections.at(index);
+}
+
+void Intersections::merge(const Intersections& merged)
+{
+	for (const Intersection& intersection : merged._intersections)
+		add(intersection);
+}
+
+void Intersections::sort()
+{
+	std::sort(_intersections.begin(), _intersections.end());
 }
 
 optional<Intersection> Intersections::hit() const
@@ -27,6 +39,7 @@ optional<Intersection> Intersections::hit() const
 void Intersections::add(const Intersection& i)
 {
 	_intersections.emplace_back(i);
+	sort();
 }
 
 int Intersections::size() const

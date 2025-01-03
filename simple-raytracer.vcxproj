@@ -121,6 +121,7 @@
     <ClInclude Include="src\ray.h" />
     <ClInclude Include="src\tuple.h" />
     <ClInclude Include="src\transformation.h" />
+    <ClInclude Include="src\world.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\intersection.cpp" />
@@ -142,6 +143,8 @@
     <ClCompile Include="src\tuple.cpp" />
     <ClCompile Include="src\tuple_test.cpp" />
     <ClCompile Include="src\transformation.cpp" />
+    <ClCompile Include="src\world.cpp" />
+    <ClCompile Include="src\world_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

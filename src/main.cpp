@@ -24,15 +24,19 @@ int main(void) {
 	Canvas canvas(canvasSize, canvasSize);
 	
 	Material material;
-	material.color = createColor(1, 0.2, 1);
+	material.color = createColor(0.9, 0.2, 0);
+
+	Material m1;
+	m1.color = createColor(0.9, 0.2, 0);
 
 	Tuple lightPosition = createPoint(-10, 10, -10);
 	Color lightColor = createColor(1, 0.2, 1);
 	Light light(lightPosition, lightColor);
 
 	Sphere sphere;
-	sphere.setTransform(scaling(1, 1, 1));
+	sphere.setTransform(scaling(1, 0.3, 1));
 	sphere.setMaterial(material);
+
 
 	for (int y = 0; y < canvasSize; ++y)
 	{
@@ -60,6 +64,7 @@ int main(void) {
 					canvas.writePixel(x, y, ballColor);
 				}
 			}
+
 		}
 	}
 
