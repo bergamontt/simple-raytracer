@@ -1,6 +1,13 @@
 #include "world.h"
 #include "transformation.h"
 
+const Color World::shadeHit(const Computations& comp) const
+{
+	return lightning(comp.object().material(), _light,
+					 comp.point(),
+					 comp.eyeVector(), comp.normalVector());
+}
+
 optional<Intersections> World::intersect(const Ray& ray)
 {
 	Intersections globalIntersections;
@@ -22,14 +29,14 @@ void World::addObject(const Sphere& sphere)
 	_objects.push_back(sphere);
 }
 
+const Sphere World::getObject(int index) const
+{
+	return _objects.at(index);
+}
+
 void World::setLight(const Light& light)
 {
 	_light = light;
-}
-
-void World::clearAllObjects()
-{
-	_objects.clear();
 }
 
 const Light World::light() const
@@ -41,8 +48,10 @@ const World World::defaultWorld()
 {
 	World world;
 	Material material = { createColor(0.8f, 1.0f, 0.6f),
+						  0.1f,
 						  0.7f,
-						  0.2f };
+						  0.2f,
+						  200.0f };
 	Sphere s1, s2;
 	s1.setMaterial(material);
 	s2.setTransform(scaling(0.5f, 0.5f, 0.5f));

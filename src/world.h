@@ -1,5 +1,5 @@
 #pragma once
-#include "shapes/sphere.h"
+#include "computations.h"
 #include "const_colors.h"
 #include "intersections.h"
 #include "light.h"
@@ -13,17 +13,17 @@ class World
 public:
 
 	World()
-		: _light{createPoint(-10, 10, 10), WHITE}
+		: _light{createPoint(-10, 10, -10), WHITE}
 	{}
 
+	const Color shadeHit(const Computations& comp) const;
 	optional<Intersections> intersect(const Ray& ray);
 
 	void addObject(const Sphere& sphere);
-	void setLight(const Light& light);
-
-	void clearAllObjects();
+	const Sphere getObject(int index) const;
 
 	const Light light() const;
+	void setLight(const Light& light);
 
 	static const World defaultWorld();
 

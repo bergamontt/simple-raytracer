@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "intersections.h"
+#include "computations.h"
 
 TEST(IntersectionTest, IntersectionCreation)
 {
@@ -66,4 +67,43 @@ TEST(IntersectionTest, IntersectionHit4)
 
 	Intersection res = xs.hit().value();
 	ASSERT_EQ(res, i4);
+}
+
+TEST(IntersectionTest, PrecomputingStateOfIntersection)
+{
+	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
+	Sphere shape;
+	optional<Intersections> xs = ray.intersect(shape);
+	Intersections xss = xs.value();
+	Intersection i = xss.get(0);
+	Computations comps(i, ray);
+	ASSERT_FLOAT_EQ(comps.time(), i.time());
+	ASSERT_EQ(comps.point(), createPoint(0, 0, -1));
+	ASSERT_EQ(comps.eyeVector(), createVector(0, 0, -1));
+	ASSERT_EQ(comps.normalVector(), createVector(0, 0, -1));
+}
+
+TEST(IntersectionTest, IntersectionsOutside)
+{
+	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
+	Sphere shape;
+	optional<Intersections> xs = ray.intersect(shape);
+	Intersections xss = xs.value();
+	Intersection i = xss.get(0);
+	Computations comps(i, ray);
+	ASSERT_FALSE(comps.inside());
+}
+
+TEST(IntersectionTest, IntersectionsInside)
+{
+	Ray ray(createPoint(0, 0, 0), createVector(0, 0, 1));
+	Sphere shape;
+	optional<Intersections> xs = ray.intersect(shape);
+	Intersections xss = xs.value();
+	Intersection i = xss.get(1);
+	Computations comps(i, ray);
+	ASSERT_EQ(comps.point(), createPoint(0, 0, 1));
+	ASSERT_EQ(comps.eyeVector(), createVector(0, 0, -1));
+	ASSERT_TRUE(comps.inside());
+	ASSERT_EQ(comps.normalVector(), createVector(0, 0, -1));
 }
