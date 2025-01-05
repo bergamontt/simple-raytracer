@@ -1,7 +1,8 @@
 #pragma once
-
 #include "color.h"
 #include <sstream>
+
+using namespace std;
 
 class Canvas
 {
@@ -13,12 +14,19 @@ public:
 		, _pixels{ new Color[width * height]{} }
 	{}
 
+	Canvas(const Canvas& src)
+	{
+		deepCopy(src);
+	}
+
 	~Canvas();
+
+	Canvas& operator=(const Canvas& src);
 
 	const Color pixelAt(int x, int y);
 	void writePixel(int x, int y, const Color& color);
-	
-	std::string toPPM();
+
+	string toPPM();
 
 	int width() const;
 	int height() const;
@@ -31,8 +39,9 @@ private:
 
 	int indexOf(int x, int y) const;
 
-	void appendHeaderPPM(std::ostream& ss) const;
-	void appendPixelsPPM(std::ostream& ss) const;
+	void appendHeaderPPM(ostream& ss) const;
+	void appendPixelsPPM(ostream& ss) const;
 
+	void deepCopy(const Canvas& src);
 };
 

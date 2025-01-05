@@ -1,6 +1,22 @@
 #include "world.h"
 #include "transformation.h"
 
+const Color World::colorAt(const Ray& ray) const
+{
+	optional<Intersections> possibleIntersections = intersect(ray);
+	if (!possibleIntersections.has_value())
+		return BLACK;
+	
+	Intersections intersections = possibleIntersections.value();
+	optional<Intersection> possibleHit = intersections.hit();
+	if (!possibleHit.has_value())
+		return BLACK;
+
+	Intersection hit = possibleHit.value();
+	Computations computations(hit, ray);
+	return shadeHit(computations);
+}
+
 const Color World::shadeHit(const Computations& comp) const
 {
 	return lightning(comp.object().material(), _light,
@@ -8,7 +24,7 @@ const Color World::shadeHit(const Computations& comp) const
 					 comp.eyeVector(), comp.normalVector());
 }
 
-optional<Intersections> World::intersect(const Ray& ray)
+optional<Intersections> World::intersect(const Ray& ray) const
 {
 	Intersections globalIntersections;
 	for (auto& object : _objects)
@@ -30,6 +46,11 @@ void World::addObject(const Sphere& sphere)
 }
 
 const Sphere World::getObject(int index) const
+{
+	return _objects.at(index);
+}
+
+Sphere& World::getChangeableObject(int index)
 {
 	return _objects.at(index);
 }

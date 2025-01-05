@@ -1,4 +1,5 @@
 #pragma once
+#include "tuple.h"
 
 class Matrix;
 
@@ -9,4 +10,10 @@ const Matrix rotationX(float degree);
 const Matrix rotationY(float degree);
 const Matrix rotationZ(float degree);
 
-const Matrix skew(float xy, float xz, float yx, float yz, float zx, float zy);
+const Matrix skew(float xy, float xz,
+				  float yx, float yz,
+				  float zx, float zy);
+
+const Matrix viewTransform(const Tuple& from,
+						   const Tuple& to,
+						   const Tuple& upVector);

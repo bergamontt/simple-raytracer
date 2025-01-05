@@ -16,11 +16,13 @@ public:
 		: _light{createPoint(-10, 10, -10), WHITE}
 	{}
 
+	const Color colorAt(const Ray& ray) const;
 	const Color shadeHit(const Computations& comp) const;
-	optional<Intersections> intersect(const Ray& ray);
+	optional<Intersections> intersect(const Ray& ray) const;
 
 	void addObject(const Sphere& sphere);
 	const Sphere getObject(int index) const;
+	Sphere& getChangeableObject(int index);
 
 	const Light light() const;
 	void setLight(const Light& light);

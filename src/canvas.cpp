@@ -10,6 +10,13 @@ Canvas::~Canvas()
     _height = 0;
 }
 
+Canvas& Canvas::operator=(const Canvas& src)
+{
+    if (this != &src)
+        deepCopy(src);
+    return *this;
+}
+
 const Color Canvas::pixelAt(int x, int y)
 {
     return _pixels[indexOf(x, y)];
@@ -60,4 +67,16 @@ void Canvas::appendPixelsPPM(std::ostream& ss) const
 
     if (pixelsCount != PIXELS_PER_LINE)
         ss << '\n';
+}
+
+void Canvas::deepCopy(const Canvas& src)
+{
+    _width = src._width;
+    _height = src._height;
+
+    int n = _width * _height;
+    _pixels = new Color[n]();
+
+    for (int i = 0; i < n; ++i)
+        _pixels[i] = src._pixels[i];
 }

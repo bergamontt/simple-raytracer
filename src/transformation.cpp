@@ -68,3 +68,19 @@ const Matrix skew(float xy, float xz, float yx, float yz, float zx, float zy)
 	rotation.set(2, 1, zy);
 	return rotation;
 }
+
+const Matrix viewTransform(const Tuple& from, const Tuple& to, const Tuple& upVector)
+{
+	Tuple forwardVector = normalize(to - from);
+	Tuple upNormalVector = normalize(upVector);
+	Tuple leftVector = cross(forwardVector, upNormalVector);
+	Tuple trueUpVector = cross(leftVector, forwardVector);
+
+	float orientationArray[] = {  leftVector._x,     leftVector._y,     leftVector._z,    0,
+								  trueUpVector._x,   trueUpVector._y,   trueUpVector._z,  0,
+								 -forwardVector._x, -forwardVector._y, -forwardVector._z, 0,
+								  0,                 0,                 0,                1 };
+
+	Matrix orientation(orientationArray, TRANSFORM_N);
+	return orientation * translation(-from._x, -from._y, -from._z);
+}

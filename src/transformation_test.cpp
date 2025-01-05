@@ -142,3 +142,44 @@ TEST(TransformationTest, SequenceTransformations)
 	ASSERT_EQ(point4, createPoint(15, 0, 7));
 	ASSERT_EQ((c * b * a) * point, createPoint(15, 0, 7));
 }
+
+TEST(TransformationTest, DefaultOrientation)
+{
+	Tuple from = createPoint(0, 0, 0);
+	Tuple to = createPoint(0, 0, -1);
+	Tuple up = createVector(0, 1, 0);
+	Matrix t = viewTransform(from, to, up);
+	ASSERT_EQ(t, Matrix::indentityMatrix(TRANSFORM_N));
+}
+
+TEST(TransformationTest, ViewTramsformationPositiveZ)
+{
+	Tuple from = createPoint(0, 0, 0);
+	Tuple to = createPoint(0, 0, 1);
+	Tuple up = createVector(0, 1, 0);
+	Matrix t = viewTransform(from, to, up);
+	ASSERT_EQ(t, scaling(-1, 1, -1));
+}
+
+TEST(TransformationTest, ViewTransformationMovesTheWorld)
+{
+	Tuple from = createPoint(0, 0, 8);
+	Tuple to = createPoint(0, 0, 1);
+	Tuple up = createVector(0, 1, 0);
+	Matrix t = viewTransform(from, to, up);
+	ASSERT_EQ(t, translation(0, 0, -8));
+}
+
+TEST(TransformationTest, ArbitraryViewTransformation)
+{
+	Tuple from = createPoint(1, 3, 2);
+	Tuple to = createPoint(4, -2, 8);
+	Tuple up = createVector(1, 1, 0);
+	Matrix t = viewTransform(from, to, up);
+	float arr[] = { -0.50709, 0.50709,  0.67612, -2.36643,
+					 0.76772, 0.60609,  0.12122, -2.82843,
+					-0.35857, 0.59761, -0.71714,  0.00000,
+					 0.00000, 0.00000,  0.00000,  1.00000 };
+	Matrix result(arr, TRANSFORM_N);
+	ASSERT_EQ(t, result);
+}
