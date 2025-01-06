@@ -20,6 +20,8 @@ public:
 	const Color shadeHit(const Computations& comp) const;
 	optional<Intersections> intersect(const Ray& ray) const;
 
+	bool isShadowed(const Tuple& point) const;
+
 	void addObject(const Sphere& sphere);
 	const Sphere getObject(int index) const;
 	Sphere& getChangeableObject(int index);

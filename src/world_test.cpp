@@ -2,6 +2,8 @@
 #include "transformation.h"
 #include "world.h"
 
+using namespace std;
+
 TEST(WorldTest, IntersectWorld)
 {
 	World w = World::defaultWorld();
@@ -42,7 +44,7 @@ TEST(WorldTest, ShadingIntersectionInside)
 	ASSERT_EQ(c, createColor(0.90498, 0.90498, 0.90498));
 }
 
-TEST(WolrdTest, ColorWhenARayMisses)
+TEST(WorldTest, ColorWhenARayMisses)
 {
 	World w = World::defaultWorld();
 	Ray r(createPoint(0, 0, -5), createVector(0, 1, 0));
@@ -50,7 +52,7 @@ TEST(WolrdTest, ColorWhenARayMisses)
 	ASSERT_EQ(res, createColor(0, 0, 0));
 }
 
-TEST(WolrdTest, ColorWhenARayHits)
+TEST(WorldTest, ColorWhenARayHits)
 {
 	World w = World::defaultWorld();
 	Ray r(createPoint(0, 0, -5), createVector(0, 0, 1));
@@ -58,7 +60,7 @@ TEST(WolrdTest, ColorWhenARayHits)
 	ASSERT_EQ(res, createColor(0.38066, 0.47583, 0.2855));
 }
 
-TEST(WolrdTest, ColorWhithIntersectionBehindTheRay)
+TEST(WorldTest, ColorWhithIntersectionBehindTheRay)
 {
 	World w = World::defaultWorld();
 
@@ -76,4 +78,54 @@ TEST(WolrdTest, ColorWhithIntersectionBehindTheRay)
 
 	Color res = w.colorAt(r);
 	ASSERT_EQ(res, innerm.color);
+}
+
+TEST(WorldTest, ShadowedArea1)
+{
+	World w = World::defaultWorld();
+	Tuple point = createPoint(0, 10, 0);
+	ASSERT_FALSE(w.isShadowed(point));
+}
+
+TEST(WorldTest, ShadowedArea2)
+{
+	World w = World::defaultWorld();
+	Tuple point = createPoint(10, -10, 10);
+	ASSERT_TRUE(w.isShadowed(point));
+}
+
+TEST(WorldTest, ShadowedArea3)
+{
+	World w = World::defaultWorld();
+	Tuple point = createPoint(-20, 20, -20);
+	ASSERT_FALSE(w.isShadowed(point));
+}
+
+TEST(WorldTest, ShadowedArea4)
+{
+	World w = World::defaultWorld();
+	Tuple point = createPoint(-2, 2, -2);
+	ASSERT_FALSE(w.isShadowed(point));
+}
+
+TEST(WorldTest, ShadeHitInShadow)
+{
+	World w;
+	w.setLight({ createPoint(0, 0, -10), createColor(1, 1, 1) });
+	
+	Sphere s1;
+	w.addObject(s1);
+
+	Sphere s2;
+	s2.setTransform(translation(0, 0, 10));
+	w.addObject(s2);
+
+	Ray ray(createPoint(0, 0, 5), createVector(0, 0, 1));
+	optional<Intersections> xs = ray.intersect(s2);
+	Intersections intersections = xs.value();
+	Intersection i = intersections.get(0);
+
+	Computations comp(i, ray);
+	Color color = w.shadeHit(comp);
+	ASSERT_EQ(color, createColor(0.1, 0.1, 0.1));
 }

@@ -21,7 +21,8 @@ const Color World::shadeHit(const Computations& comp) const
 {
 	return lightning(comp.object().material(), _light,
 					 comp.point(),
-					 comp.eyeVector(), comp.normalVector());
+					 comp.eyeVector(), comp.normalVector(),
+					 isShadowed(comp.overPoint()));
 }
 
 optional<Intersections> World::intersect(const Ray& ray) const
@@ -38,6 +39,26 @@ optional<Intersections> World::intersect(const Ray& ray) const
 			
 	}
 	return globalIntersections;
+}
+
+bool World::isShadowed(const Tuple& point) const
+{
+	Tuple vector = _light.position() - point;
+	float distance = magnitude(vector);
+	Tuple direction = normalize(vector);
+
+	Ray ray(point, direction);
+	optional<Intersections> possibleIntersections = intersect(ray);
+	if (!possibleIntersections.has_value())
+		return false;
+	
+	Intersections intersections = possibleIntersections.value();
+	optional<Intersection> possibleHit = intersections.hit();
+	if (!possibleHit.has_value())
+		return false;
+
+	Intersection hit = possibleHit.value();
+	return hit.time() < distance;
 }
 
 void World::addObject(const Sphere& sphere)

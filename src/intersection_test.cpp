@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "intersections.h"
 #include "computations.h"
+#include "transformation.h"
 
 TEST(IntersectionTest, IntersectionCreation)
 {
@@ -106,4 +107,20 @@ TEST(IntersectionTest, IntersectionsInside)
 	ASSERT_EQ(comps.eyeVector(), createVector(0, 0, -1));
 	ASSERT_TRUE(comps.inside());
 	ASSERT_EQ(comps.normalVector(), createVector(0, 0, -1));
+}
+
+TEST(IntersectionTest, HitShouldOffsetThePoint)
+{
+	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
+	Sphere s;
+	s.setTransform(translation(0, 0, 1));
+	optional<Intersections> xs = ray.intersect(s);
+	Intersections xss = xs.value();
+	Intersection i = xss.get(0);
+	Computations comps(i, ray);
+
+	Tuple overPoint = comps.overPoint();
+	Tuple point = comps.point();
+	ASSERT_TRUE(overPoint._z < -EPSILON / 2);
+	ASSERT_TRUE(point._z > overPoint._z);
 }

@@ -20,7 +20,7 @@ TEST(LightTest, MaterialLightning1)
 	Tuple eyev = createVector(0, 0, -1);
 	Tuple normalv = createVector(0, 0, -1);
 	Light light(createPoint(0 ,0, -10), WHITE);
-	Color result = lightning(m, light, position, eyev, normalv);
+	Color result = lightning(m, light, position, eyev, normalv, false);
 	ASSERT_EQ(result, createColor(1.9, 1.9, 1.9));
 }
 
@@ -31,7 +31,7 @@ TEST(LightTest, MaterialLightning2)
 	Tuple eyev = createVector(0, sqrt(2) / 2, -sqrt(2) / 2);
 	Tuple normalv = createVector(0, 0, -1);
 	Light light(createPoint(0, 0, -10), WHITE);
-	Color result = lightning(m, light, position, eyev, normalv);
+	Color result = lightning(m, light, position, eyev, normalv, false);
 	ASSERT_EQ(result, createColor(1.0, 1.0, 1.0));
 }
 
@@ -42,7 +42,7 @@ TEST(LightTest, MaterialLightning3)
 	Tuple eyev = createVector(0, 0, -1);
 	Tuple normalv = createVector(0, 0, -1);
 	Light light(createPoint(0, 10, -10), WHITE);
-	Color result = lightning(m, light, position, eyev, normalv);
+	Color result = lightning(m, light, position, eyev, normalv, false);
 	ASSERT_EQ(result, createColor(0.7364, 0.7364, 0.7364));
 }
 
@@ -53,7 +53,7 @@ TEST(LightTest, MaterialLightning4)
 	Tuple eyev = createVector(0, -sqrt(2) / 2, -sqrt(2) / 2);
 	Tuple normalv = createVector(0, 0, -1);
 	Light light(createPoint(0, 10, -10), WHITE);
-	Color result = lightning(m, light, position, eyev, normalv);
+	Color result = lightning(m, light, position, eyev, normalv, false);
 	ASSERT_EQ(result, createColor(1.6364, 1.6364, 1.6364));
 }
 
@@ -64,6 +64,20 @@ TEST(LightTest, MaterialLightning5)
 	Tuple eyev = createVector(0, 0, -1);
 	Tuple normalv = createVector(0, 0, -1);
 	Light light(createPoint(0, 0, 10), WHITE);
-	Color result = lightning(m, light, position, eyev, normalv);
+	Color result = lightning(m, light, position, eyev, normalv, false);
+	ASSERT_EQ(result, createColor(0.1, 0.1, 0.1));
+}
+
+TEST(LightTest, LightningInTheShadow)
+{
+	Material m;
+	Tuple position = createPoint(0, 0, 0);
+
+	Tuple eyev = createVector(0, 0, -1);
+	Tuple normalv = createVector(0, 0, -1);
+	Light light(createPoint(0, 0, -10), createColor(1, 1, 1));
+	bool inShadow = true;
+
+	Color result = lightning(m, light, position, eyev, normalv, inShadow);
 	ASSERT_EQ(result, createColor(0.1, 0.1, 0.1));
 }

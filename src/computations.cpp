@@ -25,6 +25,11 @@ const Tuple Computations::normalVector() const
     return _normalVector;
 }
 
+const Tuple Computations::overPoint() const
+{
+    return _overPoint;
+}
+
 bool Computations::inside() const
 {
     return _inside;
@@ -44,4 +49,9 @@ void Computations::negateIfInside()
         _inside = true;
         _normalVector = -_normalVector;
     }
+}
+
+void Computations::calculateOverPoint()
+{
+    _overPoint = _point + _normalVector * EPSILON;
 }

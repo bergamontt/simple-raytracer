@@ -13,12 +13,16 @@ struct Material
 };
 
 inline const Color lightning(const Material& m, const Light& light,
-	const Tuple& position, const Tuple& eyev, const Tuple& normalv)
+	const Tuple& position, const Tuple& eyev, const Tuple& normalv,
+	bool inShadow)
 {
 	Color effectiveColor = m.color * light.intensity();
 	Tuple lightv = normalize(light.position() - position);
 	Color ambidient = effectiveColor * m.ambient;
 	
+	if (inShadow)
+		return ambidient;
+
 	Color diffuse = BLACK;
 	Color specular = BLACK;
 	float lightDotNormal = dot(lightv, normalv);

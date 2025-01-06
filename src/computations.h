@@ -16,6 +16,7 @@ public:
 	{
 		calculateVectors();
 		negateIfInside();
+		calculateOverPoint();
 	}
 	
 	float time() const;
@@ -23,6 +24,7 @@ public:
 	const Tuple point() const;
 	const Tuple eyeVector() const;
 	const Tuple normalVector() const;
+	const Tuple overPoint() const;
 	bool inside() const;
 
 private:
@@ -33,6 +35,7 @@ private:
 	float _time;
 
 	Tuple _point;
+	Tuple _overPoint;
 	Tuple _eyeVector;
 	Tuple _normalVector;
 
@@ -40,5 +43,6 @@ private:
 
 	void calculateVectors();
 	void negateIfInside();
+	void calculateOverPoint();
 
 };
