@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "transformation.h"
+#include "ray.h"
 #include "world.h"
 
 using namespace std;
@@ -21,7 +22,7 @@ TEST(WorldTest, ShadingIntersectionOutside)
 {
 	World w = World::defaultWorld();
 	Ray r(createPoint(0, 0, -5), createVector(0, 0, 1));
-	Sphere s = w.getObject(0);
+	auto& s = w.getObject(0);
 	optional<Intersections> xs = r.intersect(s);
 	Intersections intrs = xs.value();
 	Intersection i = intrs.get(0);
@@ -35,7 +36,7 @@ TEST(WorldTest, ShadingIntersectionInside)
 	World w = World::defaultWorld();
 	w.setLight({createPoint(0, 0.25, 0), createColor(1, 1, 1)});
 	Ray r(createPoint(0, 0, 0), createVector(0, 0, 1));
-	Sphere s = w.getObject(1);
+	auto& s = w.getObject(1);
 	optional<Intersections> xs = r.intersect(s);
 	Intersections intrs = xs.value();
 	Intersection i = intrs.get(1);
@@ -64,15 +65,15 @@ TEST(WorldTest, ColorWhithIntersectionBehindTheRay)
 {
 	World w = World::defaultWorld();
 
-	Sphere& outer = w.getChangeableObject(0);
-	Material outerm = outer.material();
+	auto& outer = w.getChangeableObject(0);
+	Material outerm = outer->material();
 	outerm.ambient = 1.0f;
-	outer.setMaterial(outerm);
+	outer->setMaterial(outerm);
 
-	Sphere& inner = w.getChangeableObject(1);
-	Material innerm = inner.material();
+	auto& inner = w.getChangeableObject(1);
+	Material innerm = inner->material();
 	innerm.ambient = 1.0f;
-	inner.setMaterial(innerm);
+	inner->setMaterial(innerm);
 
 	Ray r(createPoint(0, 0, 0.75), createVector(0, 0, -1));
 
@@ -113,11 +114,11 @@ TEST(WorldTest, ShadeHitInShadow)
 	World w;
 	w.setLight({ createPoint(0, 0, -10), createColor(1, 1, 1) });
 	
-	Sphere s1;
+	auto s1 = make_shared<Sphere>();
 	w.addObject(s1);
 
-	Sphere s2;
-	s2.setTransform(translation(0, 0, 10));
+	auto s2 = make_shared<Sphere>();
+	s2->setTransform(translation(0, 0, 10));
 	w.addObject(s2);
 
 	Ray ray(createPoint(0, 0, 5), createVector(0, 0, 1));

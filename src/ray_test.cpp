@@ -1,5 +1,7 @@
 #include "gtest/gtest.h"
 #include "ray.h"
+#include "tuple.h"
+#include "shapes/sphere.h"
 #include "transformation.h"
 
 TEST(RayTest, RayCreation)
@@ -23,7 +25,7 @@ TEST(RayTest, ComputingDistance)
 TEST(RayTest, SphereIntersection1)
 {
 	Ray r(createPoint(0, 0, -5), createVector(0, 0, 1));
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersections xs = r.intersect(s).value();
 	ASSERT_EQ(xs.size(), 2);
 	ASSERT_EQ(xs.get(1).time(), 6.0f);
@@ -33,7 +35,7 @@ TEST(RayTest, SphereIntersection1)
 TEST(RayTest, SphereIntersection2)
 {
 	Ray r(createPoint(0, 1, -5), createVector(0, 0, 1));
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersections xs = r.intersect(s).value();
 	ASSERT_EQ(xs.get(0).time(), 5.0f);
 	ASSERT_EQ(xs.get(1).time(), 5.0f);
@@ -42,14 +44,14 @@ TEST(RayTest, SphereIntersection2)
 TEST(RayTest, SphereIntersection3)
 {
 	Ray r(createPoint(0, 2, -5), createVector(0, 0, 1));
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	ASSERT_FALSE(r.intersect(s).has_value());
 }
 
 TEST(RayTest, SphereIntersection4)
 {
 	Ray r(createPoint(0, 0, 0), createVector(0, 0, 1));
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersections xs = r.intersect(s).value();
 	ASSERT_EQ(xs.get(1).time(), 1.0f);
 	ASSERT_EQ(xs.get(0).time(), -1.0f);
@@ -58,7 +60,7 @@ TEST(RayTest, SphereIntersection4)
 TEST(RayTest, SphereIntersection5)
 {
 	Ray r(createPoint(0, 0, 5), createVector(0, 0, 1));
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersections xs = r.intersect(s).value();
 	ASSERT_EQ(xs.get(1).time(), -4.0f);
 	ASSERT_EQ(xs.get(0).time(), -6.0f);

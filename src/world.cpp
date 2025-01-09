@@ -19,7 +19,7 @@ const Color World::colorAt(const Ray& ray) const
 
 const Color World::shadeHit(const Computations& comp) const
 {
-	return lightning(comp.object().material(), _light,
+	return lightning(comp.object()->material(), _light,
 					 comp.point(),
 					 comp.eyeVector(), comp.normalVector(),
 					 isShadowed(comp.overPoint()));
@@ -61,17 +61,17 @@ bool World::isShadowed(const Tuple& point) const
 	return hit.time() < distance;
 }
 
-void World::addObject(const Sphere& sphere)
+void World::addObject(const ShapePtr& sphere)
 {
 	_objects.push_back(sphere);
 }
 
-const Sphere World::getObject(int index) const
+const ShapePtr& World::getObject(int index) const
 {
 	return _objects.at(index);
 }
 
-Sphere& World::getChangeableObject(int index)
+ShapePtr& World::getChangeableObject(int index)
 {
 	return _objects.at(index);
 }
@@ -94,9 +94,10 @@ const World World::defaultWorld()
 						  0.7f,
 						  0.2f,
 						  200.0f };
-	Sphere s1, s2;
-	s1.setMaterial(material);
-	s2.setTransform(scaling(0.5f, 0.5f, 0.5f));
+	auto s1 = make_shared<Sphere>();
+	auto s2 = make_shared<Sphere>();
+	s1->setMaterial(material);
+	s2->setTransform(scaling(0.5f, 0.5f, 0.5f));
 	world.addObject(s1);
 	world.addObject(s2);
 	return world;

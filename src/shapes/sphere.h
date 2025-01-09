@@ -1,42 +1,39 @@
 #pragma once
-#include "../material.h"
-#include "../matrix.h"
+#include "shape.h"
 #include "../constants.h"
 
-class Sphere
+class Sphere : public Shape
 {
 public:
-	
+
 	Sphere()
 		: _thisID{ ++_ID }
+		, _radius{ 1.0f }
+		, _origin{ createPoint(0.0f, 0.0f, 0.0f) }
 	{}
 
 	Sphere(const Sphere& s)
-		: _radius{s._radius}
-		, _material{s._material}
-		, _origin{s._origin}
-		, _transform{s._transform}
+		: Shape(s._transform, s._material)
+		, _radius{ s._radius }
+		, _origin{ s._origin }
 		, _thisID{ s._ID }
 	{}
 
-	const Tuple normalAt(const Tuple& point) const;
-
-	const Matrix transform() const;
-	const Material material() const;
 	const Tuple origin() const;
 	const float radius() const;
 	const int id() const;
 
-	void setTransform(const Matrix& m);
-	void setMaterial(const Material& m);
+	optional<Intersections> localIntersection(const Ray& ray) const;
+
+protected:
+
+	const Tuple localNormal(const Tuple& point) const override;
 
 private:
 
-	float _radius = 1.0f;
-	Material _material;
-	Tuple _origin = createPoint(0.0f, 0.0f, 0.0f);
-	Matrix _transform = Matrix::indentityMatrix(TRANSFORM_N);
-	
+	float _radius;
+	Tuple _origin;
+
 	int _thisID;
 	inline static int _ID;
 

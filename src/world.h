@@ -1,4 +1,5 @@
 #pragma once
+#include "types.h"
 #include "computations.h"
 #include "const_colors.h"
 #include "intersections.h"
@@ -22,9 +23,9 @@ public:
 
 	bool isShadowed(const Tuple& point) const;
 
-	void addObject(const Sphere& sphere);
-	const Sphere getObject(int index) const;
-	Sphere& getChangeableObject(int index);
+	void addObject(const ShapePtr& sphere);
+	const ShapePtr& getObject(int index) const;
+	ShapePtr& getChangeableObject(int index);
 
 	const Light light() const;
 	void setLight(const Light& light);
@@ -33,8 +34,7 @@ public:
 
 private:
 
-	vector<Sphere> _objects;
+	vector<ShapePtr> _objects;
 	Light _light;
 
 };
-

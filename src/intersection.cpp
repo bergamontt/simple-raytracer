@@ -5,19 +5,19 @@ float Intersection::time() const
     return _time;
 }
 
-const Sphere Intersection::object() const
+const ShapeConstPtr& Intersection::object() const
 {
-    return _sphere;
+    return _object;
 }
 
 bool operator>(const Intersection& a, const Intersection& b)
 {
-    return a.object() == b.object() && a.time() > b.time();
+    return a.time() > b.time();
 }
 
 bool operator<(const Intersection& a, const Intersection& b)
 {
-    return a.object() == b.object() && a.time() < b.time();
+    return a.time() < b.time();
 }
 
 bool operator==(const Intersection& a, const Intersection& b)

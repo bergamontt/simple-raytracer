@@ -1,6 +1,5 @@
 #pragma once
-#include "shapes/sphere.h"
-#include <vector>
+#include "types.h"
 
 using namespace std;
 
@@ -9,9 +8,9 @@ class Intersection
 
 public:
 
-	Intersection(float time, const Sphere& s)
+	Intersection(float time, const ShapeConstPtr& s)
 		: _time{ time }
-		, _sphere{ s }
+		, _object{ s }
 	{}
 
 	Intersection()
@@ -19,12 +18,12 @@ public:
 	{}
 
 	float time() const;
-	const Sphere object() const;
+	const ShapeConstPtr& object() const;
 
 private:
 
 	float _time;
-	Sphere _sphere;
+	ShapeConstPtr _object;
 
 };
 

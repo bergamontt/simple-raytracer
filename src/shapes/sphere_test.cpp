@@ -24,9 +24,9 @@ TEST(SphereTest, SphereTransforamtion2)
 
 TEST(SphereTest, SphereIntersection)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Ray r = { createPoint(0, 0, -5), createVector(0, 0, 1) };
-	s.setTransform(scaling(2, 2, 2));
+	s->setTransform(scaling(2, 2, 2));
 	Intersections xs = r.intersect(s).value();
 	ASSERT_EQ(xs.size(), 2);
 	ASSERT_EQ(xs.get(0).time(), 3);

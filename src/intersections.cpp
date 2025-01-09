@@ -10,6 +10,7 @@ void Intersections::merge(const Intersections& merged)
 {
 	for (const Intersection& intersection : merged._intersections)
 		add(intersection);
+	sort();
 }
 
 void Intersections::sort()

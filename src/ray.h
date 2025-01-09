@@ -1,12 +1,14 @@
 #pragma once
-#include "shapes/sphere.h"
+
 #include "intersections.h"
-#include "matrix.h"
-#include <optional>
+#include "tuple.h"
+
+class Matrix;
 
 using namespace std;
 
-class Ray {
+class Ray
+{
 public:
 	
 	Ray(const Tuple& origin, const Tuple& direction)
@@ -20,7 +22,7 @@ public:
 	const Tuple position(float time) const;
 	const Ray transform(const Matrix& m) const;
 
-	optional<Intersections> intersect(const Sphere& sph) const;
+	optional<Intersections> intersect(const ShapePtr& sph) const;
 
 private:
 	Tuple _origin;

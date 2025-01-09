@@ -26,6 +26,10 @@ public:
 		}
 	}
 
+	Matrix()
+		: Matrix(Matrix::indentityMatrix(TRANSFORM_N))
+	{}
+
 	Matrix(const Matrix& src)
 	{
 		deepCopy(src);

@@ -2,10 +2,11 @@
 #include "intersections.h"
 #include "computations.h"
 #include "transformation.h"
+#include "ray.h"
 
 TEST(IntersectionTest, IntersectionCreation)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersection i(3.5, s);
 	ASSERT_EQ(i.time(), 3.5);
 	ASSERT_EQ(i.object(), s);
@@ -13,7 +14,7 @@ TEST(IntersectionTest, IntersectionCreation)
 
 TEST(IntersectionTest, IntersectionHit1)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersection i1(1, s);
 	Intersection i2(2, s);
 
@@ -27,7 +28,7 @@ TEST(IntersectionTest, IntersectionHit1)
 
 TEST(IntersectionTest, IntersectionHit2)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersection i1(-1, s);
 	Intersection i2(1, s);
 
@@ -41,7 +42,7 @@ TEST(IntersectionTest, IntersectionHit2)
 
 TEST(IntersectionTest, IntersectionHit3)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersection i1(-1, s);
 	Intersection i2(-2, s);
 
@@ -54,7 +55,7 @@ TEST(IntersectionTest, IntersectionHit3)
 
 TEST(IntersectionTest, IntersectionHit4)
 {
-	Sphere s;
+	auto s = make_shared<Sphere>();
 	Intersection i1(5, s);
 	Intersection i2(7, s);
 	Intersection i3(-3, s);
@@ -73,7 +74,7 @@ TEST(IntersectionTest, IntersectionHit4)
 TEST(IntersectionTest, PrecomputingStateOfIntersection)
 {
 	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
-	Sphere shape;
+	auto shape = make_shared<Sphere>();
 	optional<Intersections> xs = ray.intersect(shape);
 	Intersections xss = xs.value();
 	Intersection i = xss.get(0);
@@ -87,7 +88,7 @@ TEST(IntersectionTest, PrecomputingStateOfIntersection)
 TEST(IntersectionTest, IntersectionsOutside)
 {
 	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
-	Sphere shape;
+	auto shape = make_shared<Sphere>();
 	optional<Intersections> xs = ray.intersect(shape);
 	Intersections xss = xs.value();
 	Intersection i = xss.get(0);
@@ -98,7 +99,7 @@ TEST(IntersectionTest, IntersectionsOutside)
 TEST(IntersectionTest, IntersectionsInside)
 {
 	Ray ray(createPoint(0, 0, 0), createVector(0, 0, 1));
-	Sphere shape;
+	auto shape = make_shared<Sphere>();
 	optional<Intersections> xs = ray.intersect(shape);
 	Intersections xss = xs.value();
 	Intersection i = xss.get(1);
@@ -112,8 +113,8 @@ TEST(IntersectionTest, IntersectionsInside)
 TEST(IntersectionTest, HitShouldOffsetThePoint)
 {
 	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
-	Sphere s;
-	s.setTransform(translation(0, 0, 1));
+	auto s = make_shared<Sphere>();
+	s->setTransform(translation(0, 0, 1));
 	optional<Intersections> xs = ray.intersect(s);
 	Intersections xss = xs.value();
 	Intersection i = xss.get(0);

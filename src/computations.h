@@ -7,7 +7,7 @@ class Computations
 {
 
 public:
-	
+
 	Computations(const Intersection& intrs,
 		const Ray& ray)
 		: _ray{ ray }
@@ -18,9 +18,9 @@ public:
 		negateIfInside();
 		calculateOverPoint();
 	}
-	
+
 	float time() const;
-	const Sphere object() const;
+	const ShapeConstPtr& object() const;
 	const Tuple point() const;
 	const Tuple eyeVector() const;
 	const Tuple normalVector() const;
@@ -30,7 +30,7 @@ public:
 private:
 
 	const Ray _ray;
-	const Sphere _object;
+	const ShapeConstPtr& _object;
 
 	float _time;
 

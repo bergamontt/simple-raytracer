@@ -5,7 +5,7 @@ float Computations::time() const
     return _time;
 }
 
-const Sphere Computations::object() const
+const ShapeConstPtr& Computations::object() const
 {
     return _object;
 }
@@ -39,7 +39,7 @@ void Computations::calculateVectors()
 {
     _point = _ray.position(_time);
     _eyeVector = -_ray.direction();
-    _normalVector = _object.normalAt(_point);
+    _normalVector = _object->normalAt(_point);
 }
 
 void Computations::negateIfInside()
