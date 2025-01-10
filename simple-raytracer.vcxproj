@@ -113,6 +113,7 @@
     <ClInclude Include="src\intersections.h" />
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\material.h" />
+    <ClInclude Include="src\shapes\plane.h" />
     <ClInclude Include="src\shapes\shape.h" />
     <ClInclude Include="src\shapes\sphere.h" />
     <ClInclude Include="src\matrix.h" />
@@ -136,6 +137,8 @@
     <ClCompile Include="src\intersection_test.cpp" />
     <ClCompile Include="src\light.cpp" />
     <ClCompile Include="src\light_test.cpp" />
+    <ClCompile Include="src\shapes\plane.cpp" />
+    <ClCompile Include="src\shapes\plane_test.cpp" />
     <ClCompile Include="src\shapes\shape.cpp" />
     <ClCompile Include="src\shapes\sphere.cpp" />
     <ClCompile Include="src\matrix.cpp" />

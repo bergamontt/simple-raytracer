@@ -27,7 +27,7 @@ public:
 	const ShapePtr& getObject(int index) const;
 	ShapePtr& getChangeableObject(int index);
 
-	const Light light() const;
+	const Light& light() const;
 	void setLight(const Light& light);
 
 	static const World defaultWorld();

@@ -21,10 +21,10 @@ public:
 
 	float time() const;
 	const ShapeConstPtr& object() const;
-	const Tuple point() const;
-	const Tuple eyeVector() const;
-	const Tuple normalVector() const;
-	const Tuple overPoint() const;
+	const Tuple& point() const;
+	const Tuple& eyeVector() const;
+	const Tuple& normalVector() const;
+	const Tuple& overPoint() const;
 	bool inside() const;
 
 private:

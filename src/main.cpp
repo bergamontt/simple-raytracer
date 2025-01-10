@@ -5,6 +5,7 @@
 #include "transformation.h"
 #include "const_colors.h"
 #include "world.h"
+#include "shapes/plane.h"
 #include "camera.h"
 #include "ray.h"
 
@@ -17,25 +18,22 @@ int main(void) {
     if (!outputFile.is_open())
         return 1;
 
-    auto floor = make_shared<Sphere>();
-    floor->setTransform(scaling(10, 0.01, 10));
+    auto floor = make_shared<Plane>();
     Material floorm;
     floorm.color = createColor(1, 0.9, 0.9);
     floorm.specular = 0;
     floor->setMaterial(floorm);
 
-    auto leftWall = make_shared<Sphere>();
+    auto leftWall = make_shared<Plane>();
     leftWall->setTransform(translation(0, 0, 5) *
         rotationY(-pi / 4) *
-        rotationX(pi / 2) *
-        scaling(10, 0.01, 10));
+        rotationX(pi / 2));
     leftWall->setMaterial(floorm);
 
-    auto rightWall = make_shared<Sphere>();
+    auto rightWall = make_shared<Plane>();
     rightWall->setTransform(translation(0, 0, 5) *
         rotationY(pi / 4) *
-        rotationX(pi / 2) *
-        scaling(10, 0.01, 10));
+        rotationX(pi / 2));
     rightWall->setMaterial(floorm);
 
     auto middle = make_shared<Sphere>();

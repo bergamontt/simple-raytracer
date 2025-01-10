@@ -81,7 +81,7 @@ void World::setLight(const Light& light)
 	_light = light;
 }
 
-const Light World::light() const
+const Light& World::light() const
 {
 	return _light;
 }

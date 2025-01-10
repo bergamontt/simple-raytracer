@@ -1,7 +1,7 @@
 #include "intersections.h"
 #include <algorithm> 
 
-const Intersection Intersections::get(int index) const
+const Intersection& Intersections::get(int index) const
 {
 	return _intersections.at(index);
 }

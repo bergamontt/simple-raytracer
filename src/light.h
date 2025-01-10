@@ -12,8 +12,8 @@ public:
 		, _intensity{ intensity }
 	{}
 
-	const Tuple position() const;
-	const Color intensity() const;
+	const Tuple& position() const;
+	const Color& intensity() const;
 
 private:
 

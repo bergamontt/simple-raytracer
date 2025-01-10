@@ -23,7 +23,7 @@ public:
 
 	Canvas& operator=(const Canvas& src);
 
-	const Color pixelAt(int x, int y);
+	const Color& pixelAt(int x, int y);
 	void writePixel(int x, int y, const Color& color);
 
 	string toPPM();

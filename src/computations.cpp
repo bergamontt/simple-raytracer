@@ -10,22 +10,22 @@ const ShapeConstPtr& Computations::object() const
     return _object;
 }
 
-const Tuple Computations::point() const
+const Tuple& Computations::point() const
 {
     return _point;
 }
 
-const Tuple Computations::eyeVector() const
+const Tuple& Computations::eyeVector() const
 {
     return _eyeVector;
 }
 
-const Tuple Computations::normalVector() const
+const Tuple& Computations::normalVector() const
 {
     return _normalVector;
 }
 
-const Tuple Computations::overPoint() const
+const Tuple& Computations::overPoint() const
 {
     return _overPoint;
 }

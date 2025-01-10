@@ -16,8 +16,8 @@ public:
 		, _direction{ direction }
 	{}
 
-	const Tuple origin() const;
-	const Tuple direction() const;
+	const Tuple& origin() const;
+	const Tuple& direction() const;
 
 	const Tuple position(float time) const;
 	const Ray transform(const Matrix& m) const;

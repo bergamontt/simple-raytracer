@@ -17,7 +17,7 @@ Canvas& Canvas::operator=(const Canvas& src)
     return *this;
 }
 
-const Color Canvas::pixelAt(int x, int y)
+const Color& Canvas::pixelAt(int x, int y)
 {
     return _pixels[indexOf(x, y)];
 }

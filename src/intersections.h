@@ -16,7 +16,7 @@ public:
 	void sort();
 
 	optional<Intersection> hit() const;
-	const Intersection get(int index) const;
+	const Intersection& get(int index) const;
 
 	int size() const;
 	void add(const Intersection& i);
