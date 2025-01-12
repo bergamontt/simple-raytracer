@@ -10,6 +10,15 @@ const Tuple Shape::normalAt(const Tuple& point) const
 	return normalize(worldNormal);
 }
 
+const Color Shape::patternColorAt(const Tuple& worldPoint) const
+{
+	Tuple objectPoint = _transform.inverse() * worldPoint;
+	Pattern* materialPattern = _material.pattern;
+	const Matrix& patternTransform = materialPattern->transform();
+	Tuple patternPoint = patternTransform.inverse() * objectPoint;
+	return materialPattern->colorAt(patternPoint);
+}
+
 const Matrix& Shape::transform() const
 {
 	return _transform;

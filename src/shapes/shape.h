@@ -11,13 +11,14 @@ class Shape : public enable_shared_from_this<Shape>
 public:
 
 	const Tuple normalAt(const Tuple& point) const;
+	const Color patternColorAt(const Tuple& p) const;
 
 	const Matrix& transform() const;
 	const Material& material() const;
 
 	void setTransform(const Matrix& m);
 	void setMaterial(const Material& m);
-
+	
 	virtual optional<Intersections> localIntersection(const Ray& ray) const = 0;
 
 protected:

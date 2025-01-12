@@ -112,7 +112,10 @@
     <ClInclude Include="src\intersection.h" />
     <ClInclude Include="src\intersections.h" />
     <ClInclude Include="src\light.h" />
+    <ClInclude Include="src\lightning.h" />
     <ClInclude Include="src\material.h" />
+    <ClInclude Include="src\patterns\pattern.h" />
+    <ClInclude Include="src\patterns\stripe.h" />
     <ClInclude Include="src\shapes\plane.h" />
     <ClInclude Include="src\shapes\shape.h" />
     <ClInclude Include="src\shapes\sphere.h" />
@@ -137,6 +140,9 @@
     <ClCompile Include="src\intersection_test.cpp" />
     <ClCompile Include="src\light.cpp" />
     <ClCompile Include="src\light_test.cpp" />
+    <ClCompile Include="src\patterns\pattern.cpp" />
+    <ClCompile Include="src\patterns\stripe.cpp" />
+    <ClCompile Include="src\patterns\stripe_test.cpp" />
     <ClCompile Include="src\shapes\plane.cpp" />
     <ClCompile Include="src\shapes\plane_test.cpp" />
     <ClCompile Include="src\shapes\shape.cpp" />

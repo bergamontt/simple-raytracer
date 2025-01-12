@@ -1,5 +1,6 @@
 #include "world.h"
 #include "transformation.h"
+#include "lightning.h"
 
 const Color World::colorAt(const Ray& ray) const
 {
@@ -19,7 +20,8 @@ const Color World::colorAt(const Ray& ray) const
 
 const Color World::shadeHit(const Computations& comp) const
 {
-	return lightning(comp.object()->material(), _light,
+	return lightning(comp.object()->material(),
+					 comp.object(), _light,
 					 comp.point(),
 					 comp.eyeVector(), comp.normalVector(),
 					 isShadowed(comp.overPoint()));
