@@ -1,14 +1,14 @@
 #pragma once
-#include "pattern.h"
-#include "solid.h"
 #include "../const_colors.h"
+#include "pattern.h"
 
-class Stripe : public Pattern
+class Ring : public Pattern
 {
+
 public:
 
-	Stripe(const Pattern* const fst,
-		   const Pattern* const scd)
+	Ring(const Pattern* const fst,
+		const Pattern* const scd)
 		: _fst{ fst }
 		, _scd{ scd }
 	{}

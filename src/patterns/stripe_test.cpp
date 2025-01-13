@@ -1,21 +1,21 @@
 #include "gtest/gtest.h"
 #include "stripe.h"
+#include "gradient.h"
+#include "ring.h"
+#include "checker.h"
+#include "solid.h"
 #include "../material.h"
 #include "../light.h"
 #include "../shapes/sphere.h"
 #include "../lightning.h"
 #include "../transformation.h"
 
-TEST(StripeTest, DefaultStripePattern)
-{
-	Stripe s;
-	ASSERT_EQ(s.firstColor(), WHITE);
-	ASSERT_EQ(s.secondColor(), BLACK);
-}
-
 TEST(StripeTest, StripeColorAt1)
 {
-	Stripe s;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe s(&s1, &s2);
+	
 	ASSERT_EQ(s.colorAt(createPoint(0, 0, 0)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(0, 1, 0)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(0, 2, 0)), WHITE);
@@ -23,7 +23,9 @@ TEST(StripeTest, StripeColorAt1)
 
 TEST(StripeTest, StripeColorAt2)
 {
-	Stripe s;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe s(&s1, &s2);
 	ASSERT_EQ(s.colorAt(createPoint(0, 0, 0)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(0, 0, 1)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(0, 0, 2)), WHITE);
@@ -31,7 +33,9 @@ TEST(StripeTest, StripeColorAt2)
 
 TEST(StripeTest, StripeColorAt3)
 {
-	Stripe s;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe s(&s1, &s2);
 	ASSERT_EQ(s.colorAt(createPoint(0, 0, 0)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(0.9, 0, 0)), WHITE);
 	ASSERT_EQ(s.colorAt(createPoint(1, 2, 0)), BLACK);
@@ -42,7 +46,9 @@ TEST(StripeTest, StripeColorAt3)
 
 TEST(StripeTest, StripeAtMaterial)
 {
-	Stripe stripe;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe stripe(&s1, &s2);
 	Material m = { WHITE, 1, 0, 0, 200, &stripe };
 	Tuple eyev = createVector(0, 0, -1);
 	Tuple normalv = createVector(0, 0, -1);
@@ -60,7 +66,9 @@ TEST(StripeTest, StripesWithObjectTransformation)
 	Sphere s;
 	s.setTransform(scaling(2, 2, 2));
 
-	Stripe stripe;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe stripe(&s1, &s2);
 	Material m = s.material();
 	m.pattern = &stripe;
 	s.setMaterial(m);
@@ -74,7 +82,9 @@ TEST(StripeTest, StripesWithObjectTransformation1)
 	Sphere s;
 	s.setTransform(scaling(2, 2, 2));
 
-	Stripe stripe;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe stripe(&s1, &s2);
 	Material m = s.material();
 	m.pattern = &stripe;
 	s.setMaterial(m);
@@ -87,7 +97,9 @@ TEST(StripeTest, StripesWithObjectTransformation2)
 {
 	Sphere s;
 
-	Stripe stripe;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe stripe(&s1, &s2);
 	stripe.setTransform(scaling(2, 2, 2));
 
 	Material m = s.material();
@@ -103,7 +115,9 @@ TEST(StripeTest, StripesWithObjectTransformation3)
 	Sphere s;
 	s.setTransform(scaling(2, 2, 2));
 
-	Stripe stripe;
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Stripe stripe(&s1, &s2);
 	stripe.setTransform(translation(0.5, 0, 0));
 	Material m = s.material();
 	m.pattern = &stripe;
@@ -111,4 +125,56 @@ TEST(StripeTest, StripesWithObjectTransformation3)
 
 	Color res = s.patternColorAt(createPoint(2.5, 0, 0));
 	ASSERT_EQ(res, WHITE);
+}
+
+TEST(GradientTest, GradientLinearlyInterpolatesBetweenColors)
+{
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Gradient g(&s1, &s2);
+	ASSERT_EQ(g.colorAt(createPoint(0, 0, 0)), WHITE);
+	ASSERT_EQ(g.colorAt(createPoint(0.25, 0, 0)), createColor(0.75, 0.75, 0.75));
+	ASSERT_EQ(g.colorAt(createPoint(0.5, 0, 0)), createColor(0.5, 0.5, 0.5));
+	ASSERT_EQ(g.colorAt(createPoint(0.75, 0, 0)), createColor(0.25, 0.25, 0.25));
+}
+
+TEST(RingTest, RingColorTest)
+{
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Ring g(&s1, &s2);
+	ASSERT_EQ(g.colorAt(createPoint(0, 0, 0)), WHITE);
+	ASSERT_EQ(g.colorAt(createPoint(1, 0, 0)), BLACK);
+	ASSERT_EQ(g.colorAt(createPoint(0, 0, 1)), BLACK);
+	ASSERT_EQ(g.colorAt(createPoint(0.708, 0, 0.708)), BLACK);
+}
+
+TEST(CheckerTest, CheckerColorTestX)
+{
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Checker c(&s1, &s2);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0, 0)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(0.99, 0, 0)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(1.01, 0, 0)), BLACK);
+}
+
+TEST(CheckerTest, CheckerColorTestY)
+{
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Checker c(&s1, &s2);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0, 0)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0.99, 0)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(0, 1.01, 0)), BLACK);
+}
+
+TEST(CheckerTest, CheckerColorTestZ)
+{
+	Solid s1(WHITE);
+	Solid s2(BLACK);
+	Checker c(&s1, &s2);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0, 0)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0, 0.99)), WHITE);
+	ASSERT_EQ(c.colorAt(createPoint(0, 0, 1.01)), BLACK);
 }

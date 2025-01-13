@@ -114,7 +114,11 @@
     <ClInclude Include="src\light.h" />
     <ClInclude Include="src\lightning.h" />
     <ClInclude Include="src\material.h" />
+    <ClInclude Include="src\patterns\checker.h" />
+    <ClInclude Include="src\patterns\gradient.h" />
     <ClInclude Include="src\patterns\pattern.h" />
+    <ClInclude Include="src\patterns\ring.h" />
+    <ClInclude Include="src\patterns\solid.h" />
     <ClInclude Include="src\patterns\stripe.h" />
     <ClInclude Include="src\shapes\plane.h" />
     <ClInclude Include="src\shapes\shape.h" />
@@ -140,7 +144,11 @@
     <ClCompile Include="src\intersection_test.cpp" />
     <ClCompile Include="src\light.cpp" />
     <ClCompile Include="src\light_test.cpp" />
+    <ClCompile Include="src\patterns\checker.cpp" />
+    <ClCompile Include="src\patterns\gradient.cpp" />
     <ClCompile Include="src\patterns\pattern.cpp" />
+    <ClCompile Include="src\patterns\ring.cpp" />
+    <ClCompile Include="src\patterns\solid.cpp" />
     <ClCompile Include="src\patterns\stripe.cpp" />
     <ClCompile Include="src\patterns\stripe_test.cpp" />
     <ClCompile Include="src\shapes\plane.cpp" />
