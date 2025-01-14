@@ -2,6 +2,7 @@
 #include "transformation.h"
 #include "ray.h"
 #include "world.h"
+#include "shapes/plane.h"
 
 using namespace std;
 
@@ -129,4 +130,65 @@ TEST(WorldTest, ShadeHitInShadow)
 	Computations comp(i, ray);
 	Color color = w.shadeHit(comp);
 	ASSERT_EQ(color, createColor(0.1, 0.1, 0.1));
+}
+
+TEST(WorldTest, ReflectedColor1)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, 0), createVector(0, 0, 1));
+	auto& shape2 = w.getChangeableObject(1);
+	Material m = shape2->material();
+	m.ambient = 1;
+	shape2->setMaterial(m);
+	optional<Intersections> posIntr = ray.intersect(shape2);
+	Intersections intr = posIntr.value();
+
+	Computations comp(intr.get(0), ray);
+	Color res = w.reflectedColor(comp);
+
+	ASSERT_EQ(res, BLACK);
+}
+
+TEST(WorldTest, ReflectedColor2)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -3), createVector(0, -sqrt(2) / 2, sqrt(2) / 2));
+	
+	Plane p;
+	Material pm = p.material();
+	pm.reflective = 0.5f;
+	p.setMaterial(pm);
+	p.setTransform(translation(0, -1, 0));
+	auto shape = make_shared<Plane>(p);
+
+
+	optional<Intersections> posIntr = ray.intersect(shape);
+	Intersections intr = posIntr.value();
+
+	Computations comp(intr.get(0), ray);
+	Color res = w.reflectedColor(comp);
+
+	ASSERT_EQ(res, createColor(0.19032, 0.2379, 0.14274));
+}
+
+TEST(WorldTest, ReflectedColor3)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -3), createVector(0, -sqrt(2) / 2, sqrt(2) / 2));
+
+	Plane p;
+	Material pm = p.material();
+	pm.reflective = 0.5f;
+	p.setMaterial(pm);
+	p.setTransform(translation(0, -1, 0));
+	auto shape = make_shared<Plane>(p);
+
+
+	optional<Intersections> posIntr = ray.intersect(shape);
+	Intersections intr = posIntr.value();
+
+	Computations comp(intr.get(0), ray);
+	Color res = w.shadeHit(comp);
+
+	ASSERT_EQ(res, createColor(0.87677, 0.92436, 0.82918));
 }

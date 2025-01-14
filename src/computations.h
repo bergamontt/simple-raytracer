@@ -25,6 +25,7 @@ public:
 	const Tuple& eyeVector() const;
 	const Tuple& normalVector() const;
 	const Tuple& overPoint() const;
+	const Tuple& reflectVector() const;
 	bool inside() const;
 
 private:
@@ -38,6 +39,7 @@ private:
 	Tuple _overPoint;
 	Tuple _eyeVector;
 	Tuple _normalVector;
+	Tuple _reflectVector;
 
 	bool _inside = false;
 

@@ -2,7 +2,7 @@
 #include "transformation.h"
 #include "lightning.h"
 
-const Color World::colorAt(const Ray& ray) const
+const Color World::colorAt(const Ray& ray, int remaining) const
 {
 	optional<Intersections> possibleIntersections = intersect(ray);
 	if (!possibleIntersections.has_value())
@@ -15,16 +15,30 @@ const Color World::colorAt(const Ray& ray) const
 
 	Intersection hit = possibleHit.value();
 	Computations computations(hit, ray);
-	return shadeHit(computations);
+	return shadeHit(computations, remaining);
 }
 
-const Color World::shadeHit(const Computations& comp) const
+const Color World::shadeHit(const Computations& comp, int remaining) const
 {
-	return lightning(comp.object()->material(),
+	Color surface = lightning(comp.object()->material(),
 					 comp.object(), _light,
 					 comp.point(),
 					 comp.eyeVector(), comp.normalVector(),
 					 isShadowed(comp.overPoint()));
+	return surface + reflectedColor(comp, remaining);
+}
+
+const Color World::reflectedColor(const Computations& comp, int remaining) const
+{
+	if (remaining <= 0)
+		return BLACK;
+	auto& object = comp.object();
+	const Material& m = object->material();
+	if (equalDouble(m.reflective, 0.0f))
+		return BLACK;
+	Ray reflectRay(comp.overPoint(), comp.reflectVector());
+	Color color = colorAt(reflectRay, remaining - 1);
+	return color * m.reflective;
 }
 
 optional<Intersections> World::intersect(const Ray& ray) const

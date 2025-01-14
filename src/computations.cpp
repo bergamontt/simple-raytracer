@@ -30,6 +30,11 @@ const Tuple& Computations::overPoint() const
     return _overPoint;
 }
 
+const Tuple& Computations::reflectVector() const
+{
+    return _reflectVector;
+}
+
 bool Computations::inside() const
 {
     return _inside;
@@ -40,6 +45,7 @@ void Computations::calculateVectors()
     _point = _ray.position(_time);
     _eyeVector = -_ray.direction();
     _normalVector = _object->normalAt(_point);
+    _reflectVector = reflect(_ray.direction(),_normalVector);
 }
 
 void Computations::negateIfInside()

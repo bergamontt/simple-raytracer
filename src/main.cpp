@@ -23,42 +23,51 @@ int main(void) {
 
     auto floor = make_shared<Plane>();
     Material floorm;
-    floorm.color = createColor(1, 0.9, 0.9);
+    /*floorm.color = createColor(1, 0.9, 0.9);*/
+    floorm.color = createColor(0.1, 0.1, 0.1);
 
-    Solid c1(WHITE);
-    Solid c3(createColor(0.8, 0.5, 0.9));
-    Solid c2(createColor(0.8, 0.8, 0.9));
-    Checker c(&c1, &c2);
+    //Solid c1(WHITE);
+    //Solid c3(createColor(0.8, 0.5, 0.9));
+    //Solid c2(createColor(0.8, 0.8, 0.9));
+    //Checker c(&c1, &c2);
 
-    Ring s(&c3, &c1);
-    floorm.pattern = &s;
+   /* Ring s(&c3, &c1);
+    floorm.pattern = &s;*/
 
-    floorm.specular = 0;
+    Material floorm2;
+    floorm2.color = BLACK;
+
+    Solid s1(BLACK);
+    Solid s2(MAGENTA);
+    Checker cc(&s1, &s2);
+    cc.setTransform(scaling(0.7, 0.7, 0.7));
+    floorm.pattern = &cc;
+    floorm.reflective = 0.5;
+
+    floorm.specular = 0.5;
     floor->setMaterial(floorm);
 
     auto leftWall = make_shared<Plane>();
     leftWall->setTransform(translation(0, 0, 5) *
         rotationY(-pi / 4) *
         rotationX(pi / 2));
-    leftWall->setMaterial(floorm);
+    leftWall->setMaterial(floorm2);
 
     auto rightWall = make_shared<Plane>();
     rightWall->setTransform(translation(0, 0, 5) *
         rotationY(pi / 4) *
         rotationX(pi / 2));
-    rightWall->setMaterial(floorm);
+    rightWall->setMaterial(floorm2);
 
     auto middle = make_shared<Sphere>();
     middle->setTransform(translation(-0.5, 1, 0.5));
     Material middlem;
 
-    /*Checker c(BLACK, MAGENTA);*/
-    //c.setTransform(scaling(0.3, 0.3, 0.3));
-
     middlem.color = createColor(0.1, 1, 0.5);
     middlem.diffuse = 0.7;
     middlem.specular = 0.3;
-    /*middlem.pattern = &c;*/
+    middlem.reflective = 0.2;
+    /*middlem.pattern = &cc;*/
 
     middle->setMaterial(middlem);
 
@@ -89,8 +98,8 @@ int main(void) {
     world.addObject(right);
     world.addObject(left);
 
-    Camera camera(200, 100, pi / 3);
-    camera.setTransform(viewTransform(createPoint(0, 3, -7),
+    Camera camera(1200, 600, pi / 3);
+    camera.setTransform(viewTransform(createPoint(3, 4, -9),
         createPoint(0, 1, 0),
         createVector(0, 1, 0)));
 
