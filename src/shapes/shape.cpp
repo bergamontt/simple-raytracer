@@ -29,6 +29,11 @@ const Material& Shape::material() const
 	return _material;
 }
 
+Material& Shape::material()
+{
+	return _material;
+}
+
 void Shape::setTransform(const Matrix& transform)
 {
 	_transform = transform;

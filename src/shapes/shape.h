@@ -15,6 +15,7 @@ public:
 
 	const Matrix& transform() const;
 	const Material& material() const;
+	Material& material();
 
 	void setTransform(const Matrix& m);
 	void setMaterial(const Material& m);

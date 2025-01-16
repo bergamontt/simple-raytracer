@@ -20,7 +20,8 @@ public:
 	const Color colorAt(const Ray& ray, int remaining = DEPTH) const;
 	const Color shadeHit(const Computations& comp, int remaining = DEPTH) const;
 	const Color reflectedColor(const Computations& comp, int remaining = DEPTH) const;
-	
+	const Color refractedColor(const Computations& comp, int remaining = DEPTH) const;
+
 	bool isShadowed(const Tuple& point) const;
 
 	optional<Intersections> intersect(const Ray& ray) const;
@@ -34,7 +35,7 @@ public:
 	void setLight(const Light& light);
 
 	static const World defaultWorld();
-	static const int DEPTH{ 4 };
+	static const int DEPTH{ 5 };
 
 private:
 

@@ -1,6 +1,8 @@
 #include "sphere.h"
+#include "../refractive_indexes.h"
 #include "../intersections.h"
 #include "../ray.h"
+
 
 const Tuple Sphere::origin() const
 {
@@ -45,6 +47,16 @@ optional<Intersections> Sphere::localIntersection(const Ray& transformedRay) con
     }
 
     return intersections;
+}
+
+const Sphere Sphere::glassSphere()
+{
+    Sphere glassSphere;
+    Material glass = glassSphere.material();
+    glass.transparency = 1.0f;
+    glass.reflactiveIndex = GLASS;
+    glassSphere.setMaterial(glass);
+    return glassSphere;
 }
 
 const Tuple Sphere::localNormal(const Tuple& point) const

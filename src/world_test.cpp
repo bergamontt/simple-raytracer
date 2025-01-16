@@ -3,6 +3,8 @@
 #include "ray.h"
 #include "world.h"
 #include "shapes/plane.h"
+#include "patterns/solid.h"
+#include "patterns/stripe.h"
 
 using namespace std;
 
@@ -191,4 +193,116 @@ TEST(WorldTest, ReflectedColor3)
 	Color res = w.shadeHit(comp);
 
 	ASSERT_EQ(res, createColor(0.87677, 0.92436, 0.82918));
+}
+
+TEST(WorldTest, RefractedColorWithOpaqueSurface)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
+	ShapePtr& obj = w.getChangeableObject(0);
+	optional<Intersections> posXs = ray.intersect(obj);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(0), ray, xs);
+	Color refracted = w.refractedColor(comp);
+	
+	ASSERT_EQ(refracted, BLACK);
+}
+
+TEST(WorldTest, RefractedMaximumDepth)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -5), createVector(0, 0, 1));
+	ShapePtr& obj = w.getChangeableObject(0);
+	obj->material().transparency = 1.0f;
+	obj->material().reflactiveIndex = 1.5f;
+
+	optional<Intersections> posXs = ray.intersect(obj);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(0), ray, xs);
+	Color refracted = w.refractedColor(comp, 0);
+
+	ASSERT_EQ(refracted, BLACK);
+}
+
+TEST(WorldTest, TotalInternalReflection)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, sqrt(2) / 2), createVector(0, 1, 0));
+	
+	ShapePtr& obj = w.getChangeableObject(0);
+	obj->material().transparency = 1.0f;
+	obj->material().reflactiveIndex = 1.5f;
+
+	optional<Intersections> posXs = ray.intersect(obj);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(1), ray, xs);
+	Color refracted = w.refractedColor(comp, 5);
+
+	ASSERT_EQ(refracted, BLACK);
+}
+
+class Dummy : public Pattern
+{
+public:
+
+	const Color colorAt(const Tuple& object_point) const
+	{
+		return Color(object_point._x, object_point._y, object_point._z);
+	}
+
+};
+
+TEST(WorldTest, RefractedColor1)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, 0.1), createVector(0, 1, 0));
+
+	ShapePtr& obj = w.getChangeableObject(0);
+	obj->material().ambient = 1.0f;
+	Solid white(WHITE);
+	Solid black(BLACK);
+	Stripe pattern(&white, &black);
+	obj->material().pattern = new Dummy();
+
+	ShapePtr& obj1 = w.getChangeableObject(1);
+	obj1->material().transparency = 1.0f;
+	obj1->material().reflactiveIndex = 1.5f;
+
+	optional<Intersections> posXs = w.intersect(ray);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(2), ray, xs);
+	Color refracted = w.refractedColor(comp, 5);
+
+	ASSERT_EQ(refracted, createColor(0, 0.99888, 0.04725));
+}
+
+TEST(WorldTest, RefractedShadeHit)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -3), createVector(0, - sqrt(2) / 2, sqrt(2) / 2));
+	
+	auto floor = make_shared<Plane>();
+	floor->setTransform(translation(0, -1, 0));
+	floor->material().transparency = 0.5f;
+	floor->material().reflactiveIndex = 1.5f;
+
+	w.addObject(floor);
+
+	auto ball = make_shared<Sphere>();
+	ball->material().color = RED;
+	ball->material().ambient = 0.5f;
+	ball->setTransform(translation(0, -3.5, -0.5));
+
+	w.addObject(ball);
+
+	optional<Intersections> posXs = ray.intersect(floor);
+	Intersections xs = posXs.value();
+	Computations comp(xs.get(0), ray, xs);
+
+	Color res = w.shadeHit(comp, 5);
+	ASSERT_EQ(res, createColor(0.93642, 0.68642, 0.68642));
 }

@@ -14,7 +14,7 @@ const Color World::colorAt(const Ray& ray, int remaining) const
 		return BLACK;
 
 	Intersection hit = possibleHit.value();
-	Computations computations(hit, ray);
+	Computations computations(hit, ray, intersections);
 	return shadeHit(computations, remaining);
 }
 
@@ -25,7 +25,7 @@ const Color World::shadeHit(const Computations& comp, int remaining) const
 					 comp.point(),
 					 comp.eyeVector(), comp.normalVector(),
 					 isShadowed(comp.overPoint()));
-	return surface + reflectedColor(comp, remaining);
+	return surface + reflectedColor(comp, remaining) + refractedColor(comp, remaining);
 }
 
 const Color World::reflectedColor(const Computations& comp, int remaining) const
@@ -39,6 +39,28 @@ const Color World::reflectedColor(const Computations& comp, int remaining) const
 	Ray reflectRay(comp.overPoint(), comp.reflectVector());
 	Color color = colorAt(reflectRay, remaining - 1);
 	return color * m.reflective;
+}
+
+const Color World::refractedColor(const Computations& comp, int remaining) const
+{
+	if (remaining == 0)
+		return BLACK;
+	const ShapeConstPtr& obj = comp.object();
+	const Material& objMaterial = obj->material();
+	if (equalDouble(objMaterial.transparency, 0.0f))
+		return BLACK;
+
+	float nRatio = comp.n1() / comp.n2();
+	float cosI = dot(comp.eyeVector(), comp.normalVector());
+	float sin2t = nRatio * nRatio * (1 - cosI * cosI);
+	if (sin2t > 1.0f)
+		return BLACK;
+
+	float cosT = sqrt(1.0f - sin2t);
+	Tuple direction = comp.normalVector() * (nRatio * cosI - cosT) -
+					  comp.eyeVector() * nRatio;
+	Ray refractRay(comp.underPoint(), direction);
+	return colorAt(refractRay, remaining - 1) * objMaterial.transparency;
 }
 
 optional<Intersections> World::intersect(const Ray& ray) const

@@ -10,7 +10,7 @@
 #include "patterns/checker.h"
 #include "patterns/ring.h"
 #include "camera.h"
-#include "ray.h"
+#include "refractive_indexes.h"
 
 using namespace std;
 using namespace std::numbers;
@@ -42,7 +42,7 @@ int main(void) {
     Checker cc(&s1, &s2);
     cc.setTransform(scaling(0.7, 0.7, 0.7));
     floorm.pattern = &cc;
-    floorm.reflective = 0.5;
+    floorm.reflective = 0.7;
 
     floorm.specular = 0.5;
     floor->setMaterial(floorm);
@@ -64,9 +64,11 @@ int main(void) {
     Material middlem;
 
     middlem.color = createColor(0.1, 1, 0.5);
-    middlem.diffuse = 0.7;
-    middlem.specular = 0.3;
-    middlem.reflective = 0.2;
+    middlem.diffuse = 0.0f;
+    middlem.specular = 0.9f;
+    middlem.reflective = 0.72f;
+    middlem.transparency = 1.0f;
+    middlem.reflactiveIndex = GLASS;
     /*middlem.pattern = &cc;*/
 
     middle->setMaterial(middlem);
@@ -78,6 +80,7 @@ int main(void) {
     rightm.color = createColor(0.5, 1, 0.1);
     rightm.diffuse = 0.7;
     rightm.specular = 0.3;
+    rightm.reflective = 0.2;
     right->setMaterial(rightm);
 
     auto left = make_shared<Sphere>();
@@ -87,19 +90,20 @@ int main(void) {
     leftm.color = createColor(1, 0.8, 0.1);
     leftm.diffuse = 0.7;
     leftm.specular = 0.3;
+    leftm.reflective = 0.2;
     left->setMaterial(leftm);
 
     World world;
-    world.setLight({ createPoint(13, 12, -10), createColor(1, 1, 1) });
+    world.setLight({ createPoint(5, 12, -10), createColor(1, 1, 1) });
     world.addObject(floor);
-    world.addObject(leftWall);
-    world.addObject(rightWall);
+    /*world.addObject(leftWall);
+    world.addObject(rightWall);*/
     world.addObject(middle);
-    world.addObject(right);
-    world.addObject(left);
+    /*world.addObject(right);
+    world.addObject(left);*/
 
-    Camera camera(1200, 600, pi / 3);
-    camera.setTransform(viewTransform(createPoint(3, 4, -9),
+    Camera camera(1200, 600, pi / 4);
+    camera.setTransform(viewTransform(createPoint(6, 4, -3),
         createPoint(0, 1, 0),
         createVector(0, 1, 0)));
 

@@ -25,6 +25,8 @@ public:
 
 	optional<Intersections> localIntersection(const Ray& ray) const;
 
+	static const Sphere glassSphere();
+
 protected:
 
 	const Tuple localNormal(const Tuple& point) const override;

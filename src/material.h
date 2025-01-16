@@ -13,6 +13,8 @@ struct Material
 	float shininess = 200.0f;
 	Pattern* pattern = nullptr;
 	float reflective = 0.0f;
+	float transparency = 0.0f;
+	float reflactiveIndex = 1.0f;
 };
 
 inline bool hasPattern(const Material& m)
