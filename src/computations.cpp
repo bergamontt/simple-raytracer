@@ -16,6 +16,25 @@ float Computations::n2() const
     return _n2;
 }
 
+float Computations::schlick() const
+{
+    float cos = dot(_eyeVector, _normalVector);
+    
+    if (_n1 > _n2)
+    {
+        float ratio = _n1 / _n2;
+        float sin2t = ratio * ratio * (1.0f - cos * cos);
+        if (sin2t > 1.0f) return 1.0f;
+
+        float cost = sqrt(1.0f - sin2t);
+        cos = cost;
+    }
+
+    float r0 = ((_n1 - _n2) / (_n1 + _n2)) *
+               ((_n1 - _n2) / (_n1 + _n2));
+    return r0 + (1.0f - r0) * pow((1.0f - cos), 5);
+}
+
 const ShapeConstPtr& Computations::object() const
 {
     return _object;

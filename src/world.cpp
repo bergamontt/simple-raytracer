@@ -20,12 +20,23 @@ const Color World::colorAt(const Ray& ray, int remaining) const
 
 const Color World::shadeHit(const Computations& comp, int remaining) const
 {
-	Color surface = lightning(comp.object()->material(),
+	const Material& objMaterial = comp.object()->material();
+	Color surface = lightning(objMaterial,
 					 comp.object(), _light,
 					 comp.point(),
 					 comp.eyeVector(), comp.normalVector(),
 					 isShadowed(comp.overPoint()));
-	return surface + reflectedColor(comp, remaining) + refractedColor(comp, remaining);
+	Color reflected = reflectedColor(comp, remaining);
+	Color refracted = refractedColor(comp, remaining);
+	
+	if (objMaterial.reflective > 0.0f && objMaterial.transparency > 0.0f)
+	{
+		float reflectance = comp.schlick();
+		return surface + reflected * reflectance +
+			refracted * (1.0f - reflectance);
+	}
+
+	return surface + reflected + refracted;
 }
 
 const Color World::reflectedColor(const Computations& comp, int remaining) const

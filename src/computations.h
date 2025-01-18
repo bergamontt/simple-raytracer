@@ -38,6 +38,8 @@ public:
 	float n1() const;
 	float n2() const;
 
+	float schlick() const;
+
 	const ShapeConstPtr& object() const;
 	const Tuple& point() const;
 	const Tuple& eyeVector() const;

@@ -306,3 +306,31 @@ TEST(WorldTest, RefractedShadeHit)
 	Color res = w.shadeHit(comp, 5);
 	ASSERT_EQ(res, createColor(0.93642, 0.68642, 0.68642));
 }
+
+TEST(WorldTest, ShadeHitWithSchlick)
+{
+	World w = World::defaultWorld();
+	Ray ray(createPoint(0, 0, -3), createVector(0, -sqrt(2) / 2, sqrt(2) / 2));
+
+	auto floor = make_shared<Plane>();
+	floor->setTransform(translation(0, -1, 0));
+	floor->material().transparency = 0.5f;
+	floor->material().reflective = 0.5f;
+	floor->material().reflactiveIndex = 1.5f;
+
+	w.addObject(floor);
+
+	auto ball = make_shared<Sphere>();
+	ball->material().color = RED;
+	ball->material().ambient = 0.5f;
+	ball->setTransform(translation(0, -3.5, -0.5));
+
+	w.addObject(ball);
+
+	optional<Intersections> posXs = ray.intersect(floor);
+	Intersections xs = posXs.value();
+	Computations comp(xs.get(0), ray, xs);
+
+	Color res = w.shadeHit(comp, 5);
+	ASSERT_EQ(res, createColor(00.93391, 0.69643, 0.69243));
+}

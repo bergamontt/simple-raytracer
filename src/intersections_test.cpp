@@ -65,3 +65,50 @@ TEST(IntersectionsTest, UnderPointOffset)
 	ASSERT_TRUE(comp.underPoint()._z > EPSILON / 2);
 	ASSERT_TRUE(comp.underPoint()._z > comp.point()._z);
 }
+
+TEST(IntersectionsTest, SchlickTotalReflection)
+{
+	
+	Sphere s1 = Sphere::glassSphere();
+	auto ss1 = make_shared<Sphere>(s1);
+
+	Ray ray(createPoint(0, 0, - sqrt(2) / 2), createVector(0, 1, 0));
+	optional<Intersections> posXs = ray.intersect(ss1);
+	Intersections xs = posXs.value();
+	Computations comp(xs.get(1), ray, xs);
+	float reflectance = comp.schlick();
+	ASSERT_FLOAT_EQ(reflectance, 1.0f);
+}
+
+TEST(IntersectionsTest, SchlickPerpendicularAngle)
+{
+
+	Sphere s1 = Sphere::glassSphere();
+	auto ss1 = make_shared<Sphere>(s1);
+
+	Ray ray(createPoint(0, 0, 0), createVector(0, 1, 0));
+	optional<Intersections> posXs = ray.intersect(ss1);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(1), ray, xs);
+	
+	float reflectance = comp.schlick();
+	ASSERT_TRUE(reflectance >= 0.04);
+}
+
+
+TEST(IntersectionsTest, SchlickSmallAngle)
+{
+
+	Sphere s1 = Sphere::glassSphere();
+	auto ss1 = make_shared<Sphere>(s1);
+
+	Ray ray(createPoint(0, 0.99, -2), createVector(0, 0, 1));
+	optional<Intersections> posXs = ray.intersect(ss1);
+	Intersections xs = posXs.value();
+
+	Computations comp(xs.get(0), ray, xs);
+
+	float reflectance = comp.schlick();
+	ASSERT_TRUE(reflectance >= 0.48873f);
+}
