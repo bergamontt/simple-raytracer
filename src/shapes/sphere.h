@@ -1,6 +1,5 @@
 #pragma once
 #include "shape.h"
-#include "../constants.h"
 
 class Sphere : public Shape
 {
