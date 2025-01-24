@@ -11,6 +11,7 @@
 #include "patterns/ring.h"
 #include "camera.h"
 #include "shapes/cube.h"
+#include "shapes/cylinder.h"
 #include "refractive_indexes.h"
 
 using namespace std;
@@ -40,14 +41,14 @@ int main(void) {
     Stripe cc(&s1, &s2);
     cc.setTransform(scaling(0.7, 0.7, 0.7));
    /* floorm.pattern = &cc;*/
-    floorm.reflective = 0.7;
+    floorm.reflective = 0.4f;
 
     Material floorm2;
     floorm2.color = BLUE;
     floorm2.pattern = &cc;
-    floorm2.reflective = 0.9f;
+    floorm2.reflective = 0.4f;
     /*floorm2.reflactiveIndex = GLASS;*/
-    floorm2.transparency = 1.0f;
+    /*floorm2.transparency = 1.0f;*/
     floorm2.diffuse = 0.6f;
     floorm2.shininess = 300.0f;
 
@@ -107,23 +108,27 @@ int main(void) {
 
     Cube s4;
     auto ss4 = make_shared<Cube>(s4);
-    ss4->material().reflective = 1;
+    ss4->material().reflective = 0.3f;
     ss4->material().diffuse = 0.2f;
     ss4->material().ambient = 0.1f;
     ss4->material().specular = 1.0f;
     ss4->material().shininess = 600.0f;
-    ss4->material().reflactiveIndex = GLASS;
-    ss4->setTransform(scaling(1.5, 1.5, 1.5) * translation(0, 1, 0));
+    ss4->material().reflactiveIndex = DIAMOND;
+    ss4->setTransform(scaling(1.5, 1.5, 1.5) * translation(0, 1, 0) * rotationY(1));
 
-    Sphere s5 = Sphere::glassSphere();
-    auto ss5 = make_shared<Sphere>(s5);
-    ss5->material().reflective = 0.9;
+    Cylinder s5;
+    s5.setCapped(true);
+    s5.setMaximum(1.5f);
+    s5.setMinimum(0.0f);
+    auto ss5 = make_shared<Cylinder>(s5);
+    ss5->material().reflective = 0.4;
     ss5->material().diffuse = 0.3f;
     ss5->material().specular = 1.0f;
     ss5->material().shininess = 600.0f;
+    ss5->material().transparency = 0.5f;
     ss5->material().reflactiveIndex = GLASS;
     ss5->material().color = createColor(0, 0.5, 0);
-    ss5->setTransform(scaling(1.5, 1.5, 1.5) * translation(1.5, 1, -2.5));
+    ss5->setTransform(scaling(1, 1, 1) * translation(0.7, 1, -3.5));
 
     Sphere s6 = Sphere::glassSphere();
     auto ss6 = make_shared<Sphere>(s6);
@@ -131,7 +136,7 @@ int main(void) {
     ss6->material().diffuse = 0.1f;
     ss6->material().specular = 1.0f;
     ss6->material().shininess = 600.0f;
-    ss6->material().reflactiveIndex = GLASS;
+    /*ss6->material().reflactiveIndex = GLASS;*/
     ss6->material().color = createColor(0.5, 0, 0);
     ss6->setTransform(translation(2.4, 1, 2.4));
 
@@ -149,7 +154,7 @@ int main(void) {
     /*world.addObject(right);
     world.addObject(left);*/
 
-    Camera camera(1200, 600, pi / 3.5);
+    Camera camera(1200, 600, pi / 3.8);
     camera.setTransform(viewTransform(createPoint(10, 8, -3),
         createPoint(0, 1, 0),
         createVector(0, 1, 0)));
