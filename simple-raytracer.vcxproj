@@ -121,6 +121,7 @@
     <ClInclude Include="src\patterns\solid.h" />
     <ClInclude Include="src\patterns\stripe.h" />
     <ClInclude Include="src\refractive_indexes.h" />
+    <ClInclude Include="src\shapes\cone.h" />
     <ClInclude Include="src\shapes\cube.h" />
     <ClInclude Include="src\shapes\cylinder.h" />
     <ClInclude Include="src\shapes\plane.h" />
@@ -155,6 +156,8 @@
     <ClCompile Include="src\patterns\solid.cpp" />
     <ClCompile Include="src\patterns\stripe.cpp" />
     <ClCompile Include="src\patterns\stripe_test.cpp" />
+    <ClCompile Include="src\shapes\cone.cpp" />
+    <ClCompile Include="src\shapes\cone_test.cpp" />
     <ClCompile Include="src\shapes\cube.cpp" />
     <ClCompile Include="src\shapes\cube_test.cpp" />
     <ClCompile Include="src\shapes\cylidner_test.cpp" />

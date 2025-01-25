@@ -8,12 +8,12 @@ const Color World::colorAt(const Ray& ray, int remaining) const
 	if (!possibleIntersections.has_value())
 		return BLACK;
 	
-	Intersections intersections = possibleIntersections.value();
+	Intersections& intersections = possibleIntersections.value();
 	optional<Intersection> possibleHit = intersections.hit();
 	if (!possibleHit.has_value())
 		return BLACK;
 
-	Intersection hit = possibleHit.value();
+	Intersection& hit = possibleHit.value();
 	Computations computations(hit, ray, intersections);
 	return shadeHit(computations, remaining);
 }
@@ -82,7 +82,7 @@ optional<Intersections> World::intersect(const Ray& ray) const
 		optional<Intersections> intrs = ray.intersect(object);
 		if (intrs.has_value())
 		{
-			Intersections xs = intrs.value();
+			Intersections& xs = intrs.value();
 			globalIntersections.merge(xs);
 		}
 			
@@ -101,12 +101,12 @@ bool World::isShadowed(const Tuple& point) const
 	if (!possibleIntersections.has_value())
 		return false;
 	
-	Intersections intersections = possibleIntersections.value();
+	Intersections& intersections = possibleIntersections.value();
 	optional<Intersection> possibleHit = intersections.hit();
 	if (!possibleHit.has_value())
 		return false;
 
-	Intersection hit = possibleHit.value();
+	Intersection& hit = possibleHit.value();
 	return hit.time() < distance;
 }
 
