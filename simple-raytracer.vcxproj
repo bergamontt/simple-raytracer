@@ -124,6 +124,7 @@
     <ClInclude Include="src\shapes\cone.h" />
     <ClInclude Include="src\shapes\cube.h" />
     <ClInclude Include="src\shapes\cylinder.h" />
+    <ClInclude Include="src\shapes\group.h" />
     <ClInclude Include="src\shapes\plane.h" />
     <ClInclude Include="src\shapes\shape.h" />
     <ClInclude Include="src\shapes\sphere.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="src\shapes\cube_test.cpp" />
     <ClCompile Include="src\shapes\cylidner_test.cpp" />
     <ClCompile Include="src\shapes\cylinder.cpp" />
+    <ClCompile Include="src\shapes\group.cpp" />
     <ClCompile Include="src\shapes\plane.cpp" />
     <ClCompile Include="src\shapes\plane_test.cpp" />
     <ClCompile Include="src\shapes\shape.cpp" />
